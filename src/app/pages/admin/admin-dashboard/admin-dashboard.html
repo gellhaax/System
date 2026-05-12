@@ -1,0 +1,136 @@
+<div class="admin-layout">
+
+  <app-admin-navbar></app-admin-navbar>
+
+  <div class="admin-main">
+
+    <!-- TOP BAR -->
+    <div class="admin-topbar">
+      <div>
+        <h1>Dashboard</h1>
+        <p>Welcome back! Here's what's happening in your school today.</p>
+      </div>
+      <div class="admin-topbar-right">
+        <div class="admin-date-badge">
+          📅 {{ today | date: 'MMMM d, y | EEEE' }}
+        </div>
+        <div class="admin-user-info">
+          <div>
+            <span class="admin-welcome">Welcome, {{ currentUser?.first_name || 'Admin' }}!</span>
+            <small>Administrator</small>
+          </div>
+          <div class="admin-avatar">👤</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="admin-stat-cards">
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon blue">👥</div>
+        <div class="admin-stat-info">
+          <p>Total Students</p>
+          <h2>{{ totalStudents }}</h2>
+          <small>All registered students</small>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon purple">💰</div>
+        <div class="admin-stat-info">
+          <p>Total Collected</p>
+          <h2 class="blue-val">₱ {{ totalCollected | number: '1.2-2' }}</h2>
+          <small>Total payments received</small>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon orange">📋</div>
+        <div class="admin-stat-info">
+          <p>Pending Balance</p>
+          <h2 class="orange-val">₱ {{ pendingBalance | number: '1.2-2' }}</h2>
+          <small>Total unpaid balance</small>
+        </div>
+      </div>
+
+      <div class="admin-stat-card">
+        <div class="admin-stat-icon green">📈</div>
+        <div class="admin-stat-info">
+          <p>Collection Rate</p>
+          <h2 class="green-val">{{ collectionRate }}%</h2>
+          <small>Overall collection rate</small>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- BOTTOM SECTION -->
+    <div class="admin-bottom">
+
+      <!-- RECENT PAYMENTS -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Recent Payments</h3>
+          <a routerLink="/admin-records" class="admin-view-all">View All</a>
+        </div>
+
+        <div *ngFor="let p of recentPayments" class="admin-payment-item">
+          <div class="admin-payment-avatar">👤</div>
+          <div class="admin-payment-info">
+            <strong>{{ p.name }}</strong>
+            <small>{{ p.course }}</small>
+          </div>
+          <div class="admin-payment-right">
+            <span class="admin-amount">₱{{ p.amount | number: '1.2-2' }}</span>
+            <small>{{ p.date }}</small>
+          </div>
+          <span [class]="p.status === 'Paid' ? 'admin-badge paid' : 'admin-badge partial'">
+            {{ p.status }}
+          </span>
+        </div>
+
+        <div *ngIf="recentPayments.length === 0" class="admin-empty">
+          No payments recorded yet.
+        </div>
+      </div>
+
+          <!-- WEEKLY & MONTHLY REPORTS -->
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h3>Payment Reports</h3>
+          <a routerLink="/admin-records" class="admin-view-all">View Records</a>
+        </div>
+
+        <!-- WEEKLY REPORT -->
+        <div class="admin-announcement-item">
+          <div class="admin-announcement-icon">📅</div>
+          <div>
+            <h4>Weekly Payments Report</h4>
+            <p>
+              Total payments collected this week:
+              <strong>₱ {{ weeklyTotal | number:'1.2-2' }}</strong>
+            </p>
+            <small>
+              {{ weekRange }}
+            </small>
+          </div>
+        </div>
+
+        <!-- MONTHLY REPORT -->
+        <div class="admin-announcement-item">
+          <div class="admin-announcement-icon">📊</div>
+          <div>
+            <h4>Monthly Payments Report</h4>
+            <p>
+              Total payments collected this month:
+              <strong>₱ {{ monthlyTotal | number:'1.2-2' }}</strong>
+            </p>
+            <small>
+              {{ currentMonth }}
+            </small>
+          </div>
+        </div>
+
+      </div>
+     

@@ -1,0 +1,48 @@
+<div class="reports-container">
+  <h2 class="title">Filters</h2>
+  
+  <div class="filter-group">
+    <button class="filter-btn" [class.active]="selectedPeriod === 'daily'" (click)="setPeriod('daily')">Daily</button>
+    <button class="filter-btn" [class.active]="selectedPeriod === 'weekly'" (click)="setPeriod('weekly')">Weekly</button>
+    <button class="filter-btn" [class.active]="selectedPeriod === 'monthly'" (click)="setPeriod('monthly')">Monthly</button>
+  </div>
+
+  <div class="action-group">
+    <button class="action-btn primary" (click)="fetchData()" [disabled]="isLoading">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+      {{ isLoading ? 'Fetching...' : 'Fetch Data' }}
+    </button>
+    <button class="action-btn secondary" (click)="downloadPDF()">
+      <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+      Download PDF
+    </button>
+  </div>
+
+  <div class="results-area" *ngIf="transactions.length > 0">
+    <div class="summary-badge">Total: ₱{{ totalAmount | number:'1.2-2' }}</div>
+    <div class="table-wrapper">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Student ID</th>
+            <th>Fee</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let t of transactions">
+            <td>{{ t.date | date:'MMM d, yyyy' }}</td>
+            <td>{{ t.studentId }}</td>
+            <td>{{ t.fee }}</td>
+            <td class="amount">₱{{ t.amount | number:'1.2-2' }}</td>
+            <td><span class="badge">{{ t.method }}</span></td>
+            <td><span class="badge status">{{ t.status }}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

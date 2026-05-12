@@ -1,0 +1,458 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+/* =========================
+   BODY
+========================= */
+
+body{
+  background:#f4f7fb;
+  zoom: 90%;
+}
+
+/* =========================
+   PAGE WRAPPER
+========================= */
+
+.page-wrapper{
+  min-height:100vh;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  padding:20px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #0f172a,
+    #1e3a8a,
+    #059669
+  );
+}
+
+/* =========================
+   AUTH CONTAINER
+========================= */
+
+.auth-container{
+  width:100%;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+}
+
+/* =========================
+   LOGIN CARD
+========================= */
+
+.card{
+  width:360px;
+
+  background:white;
+
+  padding:30px;
+
+  border-radius:16px;
+
+  text-align:center;
+
+  box-shadow:
+  0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   REGISTER CARD
+========================= */
+
+.register-card{
+  width:920px;
+
+  background:white;
+
+  border-radius:16px;
+
+  overflow:visible;
+
+  display:flex;
+
+  position:relative;
+
+  z-index:1;
+
+  box-shadow:
+  0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   LEFT PANEL
+========================= */
+
+.left-panel{
+  width:35%;
+
+  background:
+  linear-gradient(
+    180deg,
+    #1e3a8a,
+    #059669
+  );
+
+  color:white;
+
+  padding:30px;
+
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+
+  text-align:center;
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+
+.right-panel{
+  width:65%;
+
+  padding:25px 30px;
+}
+
+/* =========================
+   LOGOS
+========================= */
+
+.logo{
+  width:85px;
+
+  margin-bottom:15px;
+}
+
+.logo-large{
+  width:110px;
+
+  margin-bottom:15px;
+}
+
+/* =========================
+   HEADINGS
+========================= */
+
+h1{
+  font-size:24px;
+
+  margin-bottom:8px;
+
+  color:#0f172a;
+}
+
+.left-panel h2{
+  font-size:24px;
+
+  margin-bottom:10px;
+}
+
+.right-panel h2{
+  margin-bottom:20px;
+
+  color:#0f172a;
+
+  font-size:24px;
+}
+
+.subtitle{
+  color:gray;
+
+  margin-bottom:25px;
+
+  font-size:14px;
+}
+
+/* =========================
+   GRID
+========================= */
+
+.grid{
+  display:grid;
+
+  grid-template-columns:1fr 1fr;
+
+  gap:12px;
+}
+
+/* =========================
+   INPUT GROUP
+========================= */
+
+.input-group{
+  width:100%;
+
+  display:flex;
+  flex-direction:column;
+}
+
+/* =========================
+   LABELS
+========================= */
+
+.field-label{
+  margin-bottom:5px;
+
+  font-size:13px;
+
+  font-weight:600;
+
+  color:#334155;
+}
+
+/* =========================
+   INPUTS
+========================= */
+
+input,
+select{
+  width:100%;
+
+  height:42px;
+
+  padding:10px 12px;
+
+  border:1px solid #d1d5db;
+
+  border-radius:8px;
+
+  outline:none;
+
+  font-size:14px;
+
+  transition:0.3s;
+}
+
+input:focus,
+select:focus{
+  border-color:#059669;
+
+  box-shadow:
+  0 0 0 3px rgba(5,150,105,0.15);
+}
+
+/* =========================
+   PASSWORD FIELD
+========================= */
+
+.password-field{
+  position:relative;
+}
+
+.eye-icon{
+  position:absolute;
+
+  right:12px;
+
+  top:68%;
+
+  transform:translateY(-50%);
+
+  cursor:pointer;
+
+  font-size:16px;
+}
+
+/* =========================
+   FULL WIDTH
+========================= */
+
+.full-width{
+  grid-column:span 2;
+}
+
+/* =========================
+   BUTTON
+========================= */
+
+.main-btn{
+  width:100%;
+
+  padding:11px;
+
+  margin-top:15px;
+
+  border:none;
+
+  border-radius:8px;
+
+  background:
+  linear-gradient(
+    135deg,
+    #1e3a8a,
+    #059669
+  );
+
+  color:white;
+
+  font-size:14px;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:0.3s;
+}
+
+.main-btn:hover{
+  transform:translateY(-2px);
+
+  box-shadow:
+  0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* =========================
+   SWITCH TEXT
+========================= */
+
+.switch-text{
+  margin-top:15px;
+
+  text-align:center;
+
+  color:#555;
+
+  font-size:14px;
+}
+
+.switch-text a{
+  color:#059669;
+
+  font-weight:bold;
+
+  cursor:pointer;
+
+  text-decoration:none;
+}
+
+.switch-text a:hover{
+  text-decoration:underline;
+}
+
+/* =========================
+   POPUP
+========================= */
+
+.popup{
+  position:fixed;
+
+  inset:0;
+
+  background:rgba(0,0,0,0.5);
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
+
+  z-index:999;
+}
+
+.popup-content{
+  width:300px;
+
+  background:white;
+
+  padding:25px;
+
+  border-radius:14px;
+
+  text-align:center;
+}
+
+.popup-content p{
+  margin-bottom:18px;
+
+  font-size:14px;
+
+  color:#0f172a;
+}
+
+.popup-content button{
+  padding:10px 22px;
+
+  border:none;
+
+  border-radius:8px;
+
+  background:#059669;
+
+  color:white;
+
+  cursor:pointer;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:900px){
+
+  .register-card{
+    flex-direction:column;
+
+    width:100%;
+  }
+
+  .left-panel,
+  .right-panel{
+    width:100%;
+  }
+
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  .full-width{
+    grid-column:span 1;
+  }
+
+}
+/* =========================
+   FIX DROPDOWN BUG
+========================= */
+
+.input-group{
+  position:relative;
+  overflow:visible;
+}
+
+select{
+  appearance:auto;
+  -webkit-appearance:auto;
+  -moz-appearance:auto;
+
+  background:white;
+
+  cursor:pointer;
+
+  position:relative;
+  z-index:5;
+}
+
+/* prevent dropdown clipping */
+.right-panel{
+  overflow:visible;
+}
+
+.auth-container{
+  overflow:visible;
+}
+
+/* smoother dropdown rendering */
+select:focus{
+  position:relative;
+  z-index:999;
+}

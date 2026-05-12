@@ -1,0 +1,32 @@
+<app-navbar></app-navbar>
+
+<div class="treasurer-page">
+
+  <!-- PAYMENT CARDS -->
+  <div class="cards">
+
+    <div class="card">
+      <h3>Total Cash Payment</h3>
+      <p>₱{{ totalCash | number }}</p>
+      <img src="cash.png" alt="">
+    </div>
+
+    <div class="card">
+      <h3>Total GCash Payment</h3>
+      <p>₱{{ totalGCash | number }}</p>
+      <img src="gcash.png" alt="">
+    </div>
+
+    <div class="card">
+      <h3>Total Payment</h3>
+      <p>₱{{ totalPayment | number }}</p>
+      <img src="total.png" alt="">
+    </div>
+
+  </div>
+  
+
+  <!-- BACKGROUND -->
+  <div class="background"></div>
+
+</div>

@@ -1,0 +1,49 @@
+<div class="sidebar">
+
+  <div class="logo-section">
+    <img src="/logo1.png" alt="logo" class="logo">
+
+    <span class="system-name">
+      SCHOOL FEES
+      <br>
+      <small>MANAGEMENT SYSTEM</small>
+    </span>
+  </div>
+
+  <nav class="nav-links">
+
+    <a
+      routerLink="/admin-dashboard"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+
+      <span class="icon">🏠</span>
+      Home
+
+    </a>
+
+    <a
+      routerLink="/admin-records"
+      routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }">
+
+      <span class="icon">📋</span>
+      Records
+
+    </a>
+
+  </nav>
+
+  <div class="sidebar-illustration">
+    <img src="/finalogo.png" alt="">
+  </div>
+
+  <button
+    class="logout-btn"
+    (click)="logout()">
+
+    ⏻ Logout
+
+  </button>
+
+</div>

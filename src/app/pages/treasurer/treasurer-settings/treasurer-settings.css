@@ -1,0 +1,158 @@
+.page-bg {
+  min-height: 100vh;
+  background: #f3f6f4;
+  padding: 40px 0;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* container */
+.settings-container {
+  max-width: 1100px;
+  margin: auto;
+  padding: 20px;
+}
+
+/* HEADER */
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 25px;
+}
+
+.settings-header h2 {
+  color: #065f46;
+  font-size: 24px;
+  margin: 0;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* buttons */
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-outline {
+  padding: 8px 14px;
+  border: 1px solid #10b981;
+  background: transparent;
+  color: #065f46;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.btn-solid {
+  padding: 8px 14px;
+  border: none;
+  background: #065f46;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 24px;
+}
+
+/* CARD */
+.card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 22px;
+  box-shadow: 0 6px 18px  #065f46;
+}
+
+.card h3 {
+  color: #065f46;
+  margin-bottom: 16px;
+  font-size: 16px;
+}
+
+/* LEFT INFO LIST */
+.info-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eef2f1;
+}
+
+.info-row span {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.info-row b {
+  color: #078b66;
+  font-size: 14px;
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 8px;
+  border-radius: 8px;
+  border: 1px solid #d1fae5;
+  outline: none;
+}
+
+input:focus {
+  border-color: #10b981;
+}
+
+/* BUTTON */
+.primary-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  background: #10b981;
+  color: white;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* RIGHT SIDE STACK */
+.right-side {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* PROFILE */
+.profile-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.profile-pic {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 3px solid #10b981;
+  object-fit: cover;
+}
+
+.message {
+  font-size: 13px;
+  color: #10b981;
+  margin-top: 8px;
+}

@@ -1,0 +1,197 @@
+<!-- PAGE WRAPPER -->
+<div class="page-wrapper">
+  <div class="auth-container">
+
+    <!-- =====================
+         LOGIN CARD
+    ===================== -->
+    <div class="card" *ngIf="showLoginSection">
+
+      <img src="/finalogo.png" class="logo" alt="Logo" />
+
+      <h1>Welcome Back</h1>
+      <p class="subtitle">Sign in to your account</p>
+
+      <!-- USERNAME -->
+      <div class="input-group">
+        <label class="field-label">Username</label>
+        <input
+          type="text"
+          [(ngModel)]="loginUsername"
+          name="loginUsername"
+          placeholder="Enter username"
+        />
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="input-group password-field" style="margin-top:12px;">
+        <label class="field-label">Password</label>
+        <input
+          [type]="showLoginPassword ? 'text' : 'password'"
+          [(ngModel)]="loginPassword"
+          name="loginPassword"
+          placeholder="Enter password"
+        />
+        <span class="eye-icon" (click)="toggleLoginPassword()">
+          {{ showLoginPassword ? '👁️' : '🙈' }}
+        </span>
+      </div>
+
+      <button class="main-btn" (click)="login()">Login</button>
+
+      <p class="switch-text">
+        Don't have an account?
+        <a (click)="showRegister()">Register here</a>
+      </p>
+
+    </div>
+
+    <!-- =====================
+         REGISTER CARD
+    ===================== -->
+    <div class="register-card" *ngIf="!showLoginSection">
+
+      <!-- LEFT PANEL -->
+      <div class="left-panel">
+        <img src="/finalogo.png" class="logo" alt="Logo" />
+        <h2>Create Account</h2>
+        <p>Fill in the details to register a new user.</p>
+      </div>
+
+      <!-- RIGHT PANEL -->
+      <div class="right-panel">
+
+        <h2>Register</h2>
+
+        <div class="grid">
+
+          <!-- FIRST NAME -->
+          <div class="input-group">
+            <label class="field-label">First Name</label>
+            <input type="text" [(ngModel)]="regFirstName" name="fname" placeholder="Enter first name" />
+          </div>
+
+          <!-- LAST NAME -->
+          <div class="input-group">
+            <label class="field-label">Last Name</label>
+            <input type="text" [(ngModel)]="regLastName" name="lname" placeholder="Enter last name" />
+          </div>
+
+          <!-- EMAIL -->
+          <div class="input-group">
+            <label class="field-label">Email Address</label>
+            <input type="email" [(ngModel)]="regEmail" name="email" placeholder="example@gmail.com" />
+          </div>
+
+          <!-- CONTACT -->
+          <div class="input-group">
+            <label class="field-label">Contact Number</label>
+            <input type="text" [(ngModel)]="regContact" name="contact" placeholder="09XXXXXXXXX" />
+          </div>
+
+          <!-- PROVINCE -->
+          <div class="input-group">
+            <label class="field-label">Province</label>
+            <select [(ngModel)]="selectedProvince" name="province" (change)="onProvinceChange()">
+              <option value="">Select Province</option>
+              <option *ngFor="let province of provinces" [value]="province.code">
+                {{ province.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- MUNICIPALITY -->
+          <div class="input-group">
+            <label class="field-label">Municipality</label>
+            <select [(ngModel)]="selectedMunicipality" name="municipality" (change)="onMunicipalityChange()">
+              <option value="">Select Municipality</option>
+              <option *ngFor="let municipality of municipalities" [value]="municipality.code">
+                {{ municipality.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- BARANGAY -->
+          <div class="input-group">
+            <label class="field-label">Barangay</label>
+            <select [(ngModel)]="selectedBarangay" name="barangay">
+              <option value="">Select Barangay</option>
+              <option *ngFor="let barangay of barangays" [value]="barangay.name">
+                {{ barangay.name }}
+              </option>
+            </select>
+          </div>
+
+          <!-- DATE OF BIRTH -->
+          <div class="input-group">
+            <label class="field-label">Date of Birth</label>
+            <input type="date" [(ngModel)]="regBirthDate" name="birth" (ngModelChange)="computeAge()" />
+          </div>
+
+          <!-- AGE -->
+          <div class="input-group">
+            <label class="field-label">Age</label>
+            <input type="number" [(ngModel)]="regAge" name="age" readonly placeholder="Auto Computed" />
+          </div>
+
+          <!-- GENDER -->
+          <div class="input-group">
+            <label class="field-label">Gender</label>
+            <select [(ngModel)]="regGender" name="gender">
+              <option value="">Select Gender</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+
+          <!-- USERNAME -->
+          <div class="input-group">
+            <label class="field-label">Username</label>
+            <input type="text" [(ngModel)]="regUsername" name="username" placeholder="Enter username" />
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="input-group full-width password-field">
+            <label class="field-label">Password</label>
+            <input
+              [type]="showRegisterPassword ? 'text' : 'password'"
+              [(ngModel)]="regPassword"
+              name="password"
+              placeholder="Enter password"
+            />
+            <span class="eye-icon" (click)="toggleRegisterPassword()">
+              {{ showRegisterPassword ? '👁️' : '🙈' }}
+            </span>
+          </div>
+
+          <!-- ROLE -->
+          <div class="input-group">
+            <label class="field-label">Role</label>
+            <select [(ngModel)]="regRole" name="role">
+              <option value="admin">Admin</option>
+              <option value="treasurer">Treasurer</option>
+            </select>
+          </div>
+
+        </div>
+
+        <button class="main-btn" (click)="register()">Register</button>
+
+        <p class="switch-text">
+          Already have an account?
+          <a (click)="showLogin()">Login here</a>
+        </p>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup" *ngIf="popupMessage">
+  <div class="popup-content">
+    <p>{{ popupMessage }}</p>
+    <button (click)="closePopup()">OK</button>
+  </div>
+</div>

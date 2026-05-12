@@ -1,0 +1,29 @@
+<div class="navbar">
+
+  <div class="logo">
+  <img src="/finalogo.png" alt="logo">
+  <span>School Fees Management System</span>
+</div>
+<nav>
+  <ul>
+    <li><a routerLink="/treasurer-home" routerLinkActive="active">Home</a></li>
+     <li><a routerLink="/treasurer-records" routerLinkActive="active">Records</a></li>
+    <li><a routerLink="/treasurer-settings" routerLinkActive="active">Settings</a></li>
+    <li><a routerLink="/treasurer-about" routerLinkActive="active">About</a></li>
+    <li><a routerLink="/treasurer-contact" routerLinkActive="active">Contact</a></li>
+   <li class="role">
+  <img
+    *ngIf="profileImage"
+    [src]="profileImage"
+    class="nav-avatar"
+  />
+
+  <span *ngIf="!profileImage">👤</span>
+
+  Treasurer
+</li>
+  
+  </ul>
+</nav>
+
+</div>

@@ -1,0 +1,523 @@
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f4f8;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.admin-main {
+  margin-left: 240px;
+  flex: 1;
+  padding: 30px;
+}
+
+.admin-topbar {
+  margin-bottom: 24px;
+}
+
+.admin-topbar h1 {
+  font-size: 28px;
+  color: #0a1628;
+  margin: 0;
+  font-weight: 700;
+}
+
+.admin-topbar p {
+  color: #64748b;
+  margin: 4px 0 0 0;
+  font-size: 14px;
+}
+
+.admin-search-bar {
+  margin-bottom: 20px;
+}
+
+.admin-search-bar input {
+  width: 100%;
+  max-width: 400px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.admin-search-bar input:focus {
+  border-color: #2196f3;
+}
+
+.admin-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.admin-table th {
+  background: #f1f5f9;
+  color: #0a1628;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #334155;
+}
+
+.admin-table tr:hover td {
+  background: #f8fafc;
+}
+
+.paid-val { color: #4caf50; font-weight: 600; }
+.balance-val { color: #ff9800; font-weight: 600; }
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.view-btn {
+  background: #e3f2fd;
+  color: #1565c0;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.view-btn:hover {
+  background: #1565c0;
+  color: white;
+}
+
+.delete-btn {
+  background: #fdecea;
+  color: #d32f2f;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.2s;
+}
+
+.delete-btn:hover {
+  background: #d32f2f;
+  color: white;
+}
+
+.admin-empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 40px;
+  font-size: 14px;
+}
+
+.admin-badge {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: bold;
+}
+
+.admin-badge.paid { background: #e8f5e9; color: #4caf50; }
+.admin-badge.partial { background: #fff3e0; color: #ff9800; }
+
+/* MODAL */
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.admin-modal {
+  background: white;
+  border-radius: 16px;
+  padding: 30px;
+  width: 700px;
+  max-height: 80vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #0a1628;
+  font-size: 18px;
+}
+
+.close-btn {
+  background: #f1f5f9;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #64748b;
+}
+
+.close-btn:hover {
+  background: #e2e8f0;
+}
+
+.modal-info {
+  background: #f8fafc;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.modal-info p {
+  margin: 6px 0;
+  color: #334155;
+  font-size: 14px;
+}
+
+.modal-footer {
+  margin-top: 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+h4 {
+  color: #0a1628;
+  margin-bottom: 12px;
+}
+.admin-records-page {
+  padding: 20px;
+  background: #f1f5f9;
+  min-height: 100vh;
+}
+
+/* ✅ EARNINGS SUMMARY STYLES */
+.earnings-summary {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 24px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.earnings-summary h2 {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.earnings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.earning-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.earning-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  background: #f1f5f9;
+}
+
+.earning-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  background: white;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.earning-info h3 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 600;
+}
+
+.earning-info .amount {
+  margin: 0 0 4px 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.earning-info .date {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+/* SEARCH & RECORDS STYLES */
+.search-bar {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 12px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  background: white;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.records-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.records-table thead {
+  background: #f8fafc;
+}
+
+.records-table th {
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  color: #475569;
+  font-size: 13px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.records-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #f1f5f9;
+  color: #475569;
+  font-size: 14px;
+}
+
+.records-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-view, .btn-delete {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-view {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.btn-view:hover {
+  background: #bfdbfe;
+}
+
+.btn-delete {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-delete:hover {
+  background: #fecaca;
+}
+
+/* MODAL STYLES */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 500px;
+  width: 90%;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+.modal-content h2 {
+  margin: 0 0 20px 0;
+  color: #1e293b;
+}
+
+.student-details p {
+  margin: 10px 0;
+  color: #475569;
+}
+
+.student-details strong {
+  color: #1e293b;
+}
+
+.btn-close {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-close:hover {
+  background: #2563eb;
+}
+/* Add at the bottom of your CSS file */
+
+.subtitle {
+  margin: -15px 0 20px 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.earning-card {
+  cursor: pointer;
+  position: relative;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.earning-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+  border-color: #e2e8f0;
+}
+
+.earning-card.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  transform: translateY(-5px);
+}
+
+.earning-card.active .earning-info h3,
+.earning-card.active .earning-info .amount,
+.earning-card.active .earning-info .date {
+  color: white;
+}
+
+.earning-card.active .earning-icon {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.filter-indicator {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: #f0fdf4;
+  border: 1px solid #86efac;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #166534;
+  font-size: 14px;
+}
+
+.filter-indicator strong {
+  color: #15803d;
+}
+
+.btn-clear-filter {
+  padding: 6px 12px;
+  background: #dcfce7;
+  color: #166534;
+  border: 1px solid #86efac;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-clear-filter:hover {
+  background: #86efac;
+  color: #14532d;
+}
+
+.earning-icon.all {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.earning-icon.daily {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+}
+
+.earning-icon.weekly {
+  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  color: white;
+}
+
+.earning-icon.monthly {
+  background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  color: white;
+}

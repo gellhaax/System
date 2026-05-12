@@ -1,0 +1,133 @@
+<app-navbar></app-navbar>
+
+<div class="treasurer-page">
+  <div class="page-bg">
+
+    <div class="settings-container">
+
+      <!-- HEADER -->
+      <div class="settings-header">
+
+        <div>
+          <h2><i class="fa-solid fa-gear"></i> Account Settings</h2>
+          <p class="subtitle">Manage your account information, password and preferences.</p>
+        </div>
+
+        <div class="actions">
+          <button class="btn-outline" (click)="switchMode()">◑ Dark Mode</button>
+          <button class="btn-solid" (click)="logout()">➜] Log Out</button>
+        </div>
+
+      </div>
+
+      <div class="grid">
+
+        <!-- LEFT CARD -->
+        <div class="card" *ngIf="user">
+
+          <h3><i class="fa-solid fa-user"></i> Account Information</h3>
+
+          <div class="info-list">
+
+            <div class="info-row">
+              <span>First Name</span>
+              <b>{{ user.first_name }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Last Name</span>
+              <b>{{ user.last_name }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Email</span>
+              <b>{{ user.email }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Username</span>
+              <b>{{ user.username }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Contact</span>
+              <b>{{ user.contact }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Address</span>
+              <b>{{ user.address }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Birth Date</span>
+              <b>{{ user.dob }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Age</span>
+              <b>{{ user.age }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Gender</span>
+              <b>{{ user.gender }}</b>
+            </div>
+
+            <div class="info-row">
+              <span>Role</span>
+              <b>{{ user.role }}</b>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right-side">
+
+          <!-- CHANGE PASSWORD -->
+          <div class="card">
+
+            <h3><i class="fa-solid fa-lock"></i> Change Password</h3>
+
+            <input type="password" placeholder="Current Password" [(ngModel)]="currentPassword">
+            <input type="password" placeholder="New Password" [(ngModel)]="newPassword">
+            <input type="password" placeholder="Confirm New Password" [(ngModel)]="confirmPassword">
+
+            <button class="primary-btn" (click)="changePassword()">
+              Change Password
+            </button>
+
+            <p class="message">{{ passwordMessage }}</p>
+
+          </div>
+
+          <!-- PROFILE -->
+          <div class="card">
+
+            <h3><i class="fa-solid fa-user-pen"></i> Profile</h3>
+
+            <div class="profile-wrapper">
+              <img [src]="profilePreview || 'https://via.placeholder.com/100'" class="profile-pic">
+            </div>
+
+            <button class="primary-btn" (click)="toggleEdit()">
+              Edit Profile
+            </button>
+
+            <div *ngIf="showEdit" class="edit-box">
+              <input type="file" (change)="onFileSelected($event)">
+              <button class="primary-btn" (click)="saveProfile()">
+                Save Changes
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
