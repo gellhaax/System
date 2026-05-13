@@ -14,12 +14,23 @@ import { HttpClient } from '@angular/common/http';
 export class Login implements OnInit {
   constructor(private router: Router, private http: HttpClient) {}
 
+  // ── UI STATE ─────────────────────────────────────────────────
   showLoginSection = true;
   showLoginPassword = false;
   showRegisterPassword = false;
+
+  // ── POPUP ────────────────────────────────────────────────────
   popupMessage = '';
+  isSuccessPopup = false; // true = green success, false = warning/error
+
+  // ── VALIDATION TRIGGER ───────────────────────────────────────
+  submitted = false; // becomes true when Register is clicked
+
+  // ── LOGIN FIELDS ─────────────────────────────────────────────
   loginUsername = '';
   loginPassword = '';
+
+  // ── REGISTER FIELDS ──────────────────────────────────────────
   regFirstName = '';
   regLastName = '';
   regEmail = '';
@@ -30,6 +41,8 @@ export class Login implements OnInit {
   regUsername = '';
   regPassword = '';
   regRole = 'admin';
+
+  // ── ADDRESS ──────────────────────────────────────────────────
   selectedProvince = '';
   selectedMunicipality = '';
   selectedBarangay = '';
@@ -39,10 +52,18 @@ export class Login implements OnInit {
   municipalities: any[] = [];
   barangays: any[] = [];
 
-  ngOnInit(): void { this.loadProvinces(); }
+  // ─────────────────────────────────────────────────────────────
+  // LIFECYCLE
+  // ─────────────────────────────────────────────────────────────
+  ngOnInit(): void {
+    this.loadProvinces();
+  }
 
+  // ─────────────────────────────────────────────────────────────
+  // ADDRESS LOADERS
+  // ─────────────────────────────────────────────────────────────
   loadProvinces() {
-    this.http.get<any>('https://psgc.gitlab.io/api/provinces/').subscribe((data) => {
+    this.http.get<any[]>('https://psgc.gitlab.io/api/provinces/').subscribe((data) => {
       this.provinces = data.filter((p: any) => p.name === 'Misamis Oriental');
     });
   }
@@ -54,10 +75,15 @@ export class Login implements OnInit {
     this.selectedBarangay = '';
     this.municipalities = [];
     this.barangays = [];
-    this.http.get<any>(`https://psgc.gitlab.io/api/provinces/${this.selectedProvince}/cities-municipalities/`).subscribe((data) => {
-      const allowed = ['Cagayan de Oro City', 'Tagoloan', 'Villanueva'];
-      this.municipalities = data.filter((m: any) => allowed.includes(m.name));
-    });
+
+    if (!this.selectedProvince) return;
+
+    this.http
+      .get<any[]>(`https://psgc.gitlab.io/api/provinces/${this.selectedProvince}/cities-municipalities/`)
+      .subscribe((data) => {
+        const allowed = ['Cagayan de Oro City', 'Tagoloan', 'Villanueva'];
+        this.municipalities = data.filter((m: any) => allowed.includes(m.name));
+      });
   }
 
   onMunicipalityChange() {
@@ -65,18 +91,95 @@ export class Login implements OnInit {
     this.selectedMunicipalityName = municipality?.name || '';
     this.selectedBarangay = '';
     this.barangays = [];
-    this.http.get<any>(`https://psgc.gitlab.io/api/cities-municipalities/${this.selectedMunicipality}/barangays/`).subscribe((data) => {
-      this.barangays = data;
-    });
+
+    if (!this.selectedMunicipality) return;
+
+    this.http
+      .get<any[]>(`https://psgc.gitlab.io/api/cities-municipalities/${this.selectedMunicipality}/barangays/`)
+      .subscribe((data) => {
+        // Sort alphabetically for easier selection
+        this.barangays = data.sort((a: any, b: any) => a.name.localeCompare(b.name));
+      });
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // INLINE VALIDATORS
+  // ─────────────────────────────────────────────────────────────
+  isEmailValid(): boolean {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(this.regEmail);
+  }
+
+  isContactValid(): boolean {
+    // Philippine mobile: 09 + 9 digits = 11 chars total
+    const pattern = /^09\d{9}$/;
+    return pattern.test(this.regContact);
+  }
+
+  isPasswordValid(): boolean {
+    // At least 6 chars, 1 uppercase, 1 digit
+    const pattern = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
+    return pattern.test(this.regPassword);
+  }
+
+  isFormValid(): boolean {
+    return !!(
+      this.regFirstName &&
+      this.regLastName &&
+      this.regEmail && this.isEmailValid() &&
+      this.regContact && this.isContactValid() &&
+      this.selectedProvince &&
+      this.selectedMunicipality &&
+      this.selectedBarangay &&
+      this.regBirthDate &&
+      this.regAge !== null && this.regAge > 15 &&
+      this.regGender &&
+      this.regUsername &&
+      this.regPassword && this.isPasswordValid()
+    );
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // TOGGLE HELPERS
+  // ─────────────────────────────────────────────────────────────
   toggleLoginPassword() { this.showLoginPassword = !this.showLoginPassword; }
   toggleRegisterPassword() { this.showRegisterPassword = !this.showRegisterPassword; }
-  showPopup(message: string) { this.popupMessage = message; }
-  closePopup() { this.popupMessage = ''; }
-  showRegister() { this.showLoginSection = false; }
-  showLogin() { this.showLoginSection = true; }
 
+  // ─────────────────────────────────────────────────────────────
+  // NAVIGATION
+  // ─────────────────────────────────────────────────────────────
+  showRegister() {
+    this.submitted = false;
+    this.showLoginSection = false;
+  }
+
+  showLogin() {
+    this.submitted = false;
+    this.showLoginSection = true;
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // POPUP
+  // ─────────────────────────────────────────────────────────────
+  showPopup(message: string, success = false) {
+    this.popupMessage = message;
+    this.isSuccessPopup = success;
+  }
+
+  closePopup() {
+    const wasSuccess = this.isSuccessPopup;
+    this.popupMessage = '';
+    this.isSuccessPopup = false;
+
+    // After successful registration → redirect to Login
+    if (wasSuccess) {
+      this.showLogin();
+    }
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // AGE CALCULATOR
+  // ─────────────────────────────────────────────────────────────
   computeAge() {
     if (!this.regBirthDate) { this.regAge = null; return; }
     const today = new Date();
@@ -87,43 +190,91 @@ export class Login implements OnInit {
     this.regAge = age;
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // REGISTER
+  // ─────────────────────────────────────────────────────────────
   register() {
-    if (!this.regFirstName || !this.regLastName || !this.regEmail || !this.regContact ||
-      !this.selectedProvince || !this.selectedMunicipality || !this.selectedBarangay ||
-      !this.regBirthDate || !this.regGender || !this.regUsername || !this.regPassword) {
-      this.showPopup('All fields are required!'); return;
-    }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailPattern.test(this.regEmail)) { this.showPopup('Invalid email address!'); return; }
-    const phonePattern = /^09\d{9}$/;
-    if (!phonePattern.test(this.regContact)) { this.showPopup('Contact number must follow PH format (09XXXXXXXXX)'); return; }
-    if ((this.regAge ?? 0) <= 15) { this.showPopup('User must be 16 years old and above.'); return; }
-    const passwordPattern = /^(?=.*[A-Z])(?=.*\d).{6,}$/;
-    if (!passwordPattern.test(this.regPassword)) { this.showPopup('Password must contain uppercase letter and number.'); return; }
+    // Mark as submitted so all red labels appear
+    this.submitted = true;
+
+    // Stop here if form is invalid — red labels are already visible
+    if (!this.isFormValid()) return;
 
     const userData = {
-      first_name: this.regFirstName, last_name: this.regLastName, email: this.regEmail,
+      first_name: this.regFirstName,
+      last_name: this.regLastName,
+      email: this.regEmail,
       contact: this.regContact,
-      address: this.selectedBarangay + ', ' + this.selectedMunicipalityName + ', ' + this.selectedProvinceName,
-      dob: this.regBirthDate, age: this.regAge, gender: this.regGender,
-      username: this.regUsername, password: this.regPassword, role: this.regRole
+      address:
+        this.selectedBarangay + ', ' +
+        this.selectedMunicipalityName + ', ' +
+        this.selectedProvinceName,
+      dob: this.regBirthDate,
+      age: this.regAge,
+      gender: this.regGender,
+      username: this.regUsername,
+      password: this.regPassword,
+      role: this.regRole,
     };
+
     this.http.post<any>('http://localhost:3000/api/register', userData).subscribe({
-      next: () => this.showPopup('Registration Successful!'),
-      error: (err) => this.showPopup(err.error?.error || 'Registration failed!')
+      next: () => {
+        this.showPopup('Registration Successful! You can now log in.', true);
+        this.resetRegisterForm();
+      },
+      error: (err) => {
+        this.showPopup(err.error?.error || 'Registration failed. Please try again.');
+      },
     });
   }
 
+  // ─────────────────────────────────────────────────────────────
+  // RESET REGISTER FORM
+  // ─────────────────────────────────────────────────────────────
+  resetRegisterForm() {
+    this.submitted = false;
+    this.regFirstName = '';
+    this.regLastName = '';
+    this.regEmail = '';
+    this.regContact = '';
+    this.regBirthDate = '';
+    this.regAge = null;
+    this.regGender = '';
+    this.regUsername = '';
+    this.regPassword = '';
+    this.regRole = 'admin';
+    this.selectedProvince = '';
+    this.selectedMunicipality = '';
+    this.selectedBarangay = '';
+    this.selectedProvinceName = '';
+    this.selectedMunicipalityName = '';
+    this.municipalities = [];
+    this.barangays = [];
+  }
+
+  // ─────────────────────────────────────────────────────────────
+  // LOGIN
+  // ─────────────────────────────────────────────────────────────
   login() {
-    this.http.post<any>('http://localhost:3000/api/login', {
-      username: this.loginUsername, password: this.loginPassword
-    }).subscribe({
-      next: (res) => {
-        localStorage.setItem('currentUser', JSON.stringify(res.user));
-        if (res.user.role === 'admin') this.router.navigate(['/admin-dashboard']);
-        else this.router.navigate(['/treasurer-home']);
-      },
-      error: (err) => this.showPopup(err.error?.error || 'Invalid username or password!')
-    });
+    if (!this.loginUsername || !this.loginPassword) {
+      this.showPopup('Please enter your username and password.');
+      return;
+    }
+
+    this.http
+      .post<any>('http://localhost:3000/api/login', {
+        username: this.loginUsername,
+        password: this.loginPassword,
+      })
+      .subscribe({
+        next: (res) => {
+          localStorage.setItem('currentUser', JSON.stringify(res.user));
+          if (res.user.role === 'admin') this.router.navigate(['/admin-dashboard']);
+          else this.router.navigate(['/treasurer-home']);
+        },
+        error: (err) => {
+          this.showPopup(err.error?.error || 'Invalid username or password!');
+        },
+      });
   }
 }

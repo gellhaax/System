@@ -1,60 +1,134 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import {
+  collection,
+  doc,
+  getDocs,
+  getDoc,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  orderBy,
+  Timestamp
+} from 'firebase/firestore';
+import { FirebaseService } from './firebase-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
+  private firebase = inject(FirebaseService);
 
-  private baseUrl = 'http://localhost:3000/api';
+  constructor() {}
 
-  constructor(private http: HttpClient) {}
+  // ── STUDENTS ──────────────────────────────────────────────
 
-  login(username: string, password: string) {
-    return this.http.post(`${this.baseUrl}/login`, { username, password });
+  async getStudents(): Promise<any[]> {
+    const snapshot = await getDocs(collection(this.firebase.firestore, 'students'));
+    return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
   }
 
-  register(data: any) {
-    return this.http.post(`${this.baseUrl}/register`, data);
+  async getStudent(studentId: string): Promise<any> {
+    // Try by document ID first
+    const docRef = doc(this.firebase.firestore, 'students', studentId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) return { id: docSnap.id, ...docSnap.data() };
+
+    // Fallback: search by studentId field
+    const q = query(
+      collection(this.firebase.firestore, 'students'),
+      where('studentId', '==', studentId)
+    );
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      const d = snapshot.docs[0];
+      return { id: d.id, ...d.data() };
+    }
+    return null;
   }
 
-  getStudents() {
-    return this.http.get<any[]>(`${this.baseUrl}/students`);
+  async addStudent(data: any): Promise<any> {
+    const payload = {
+      ...data,
+      created_at: Timestamp.now()
+    };
+    const docRef = await addDoc(collection(this.firebase.firestore, 'students'), payload);
+    return { id: docRef.id, ...payload };
   }
 
-  getStudent(studentId: string) {
-    return this.http.get<any>(`${this.baseUrl}/students/${studentId}`);
+  async updateStudent(studentId: string, data: any): Promise<any> {
+    // Find document by studentId field
+    const q = query(
+      collection(this.firebase.firestore, 'students'),
+      where('studentId', '==', studentId)
+    );
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      const docRef = snapshot.docs[0].ref;
+      await updateDoc(docRef, data);
+      return { id: snapshot.docs[0].id, ...data };
+    }
+    // Fallback: try as document ID
+    const docRef = doc(this.firebase.firestore, 'students', studentId);
+    await updateDoc(docRef, data);
+    return { id: studentId, ...data };
   }
 
-  addStudent(data: any) {
-    return this.http.post(`${this.baseUrl}/students`, data);
+  async deleteStudent(studentId: string): Promise<void> {
+    // Find document by studentId field
+    const q = query(
+      collection(this.firebase.firestore, 'students'),
+      where('studentId', '==', studentId)
+    );
+    const snapshot = await getDocs(q);
+    if (!snapshot.empty) {
+      await deleteDoc(snapshot.docs[0].ref);
+      return;
+    }
+    // Fallback: try as document ID
+    await deleteDoc(doc(this.firebase.firestore, 'students', studentId));
   }
 
-  updateStudent(studentId: string, data: any) {
-    return this.http.put(`${this.baseUrl}/students/${studentId}`, data);
+  // ── TRANSACTIONS ──────────────────────────────────────────
+
+  async addTransaction(data: any): Promise<any> {
+    const payload = {
+      ...data,
+      created_at: Timestamp.now()
+    };
+    const docRef = await addDoc(collection(this.firebase.firestore, 'transactions'), payload);
+    return { id: docRef.id, ...payload };
   }
 
-  deleteStudent(studentId: string) {
-    return this.http.delete(`${this.baseUrl}/students/${studentId}`);
+  async deleteTransaction(id: string): Promise<void> {
+    await deleteDoc(doc(this.firebase.firestore, 'transactions', id));
   }
 
-  addTransaction(data: any) {
-    return this.http.post(`${this.baseUrl}/transactions`, data);
+  // ── APPROVALS ─────────────────────────────────────────────
+
+  async sendApproval(data: any): Promise<any> {
+    const payload = {
+      ...data,
+      status:     'pending',
+      created_at: Timestamp.now()
+    };
+    const docRef = await addDoc(collection(this.firebase.firestore, 'approvals'), payload);
+    return { id: docRef.id, ...payload };
   }
 
-  deleteTransaction(id: number) {
-    return this.http.delete(`${this.baseUrl}/transactions/${id}`);
+  async getPendingApprovals(): Promise<any[]> {
+    const q = query(
+      collection(this.firebase.firestore, 'approvals'),
+      where('status', '==', 'pending')
+    );
+    const snapshot = await getDocs(q);
+    return snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
   }
 
-  sendApproval(data: any) {
-    return this.http.post(`${this.baseUrl}/approvals`, data);
-  }
-
-  getPendingApprovals() {
-    return this.http.get<any[]>(`${this.baseUrl}/approvals/pending`);
-  }
-
-  respondToApproval(id: number, status: string) {
-    return this.http.put(`${this.baseUrl}/approvals/${id}`, { status });
+  async respondToApproval(id: string, status: string): Promise<any> {
+    const docRef = doc(this.firebase.firestore, 'approvals', id);
+    await updateDoc(docRef, { status });
+    return { id, status };
   }
 }

@@ -68,64 +68,124 @@
           <!-- FIRST NAME -->
           <div class="input-group">
             <label class="field-label">First Name</label>
-            <input type="text" [(ngModel)]="regFirstName" name="fname" placeholder="Enter first name" />
+            <input
+              type="text"
+              [(ngModel)]="regFirstName"
+              name="fname"
+              placeholder="Enter first name"
+              [class.input-error]="submitted && !regFirstName"
+            />
+            <span class="error-label" *ngIf="submitted && !regFirstName">First name is required.</span>
           </div>
 
           <!-- LAST NAME -->
           <div class="input-group">
             <label class="field-label">Last Name</label>
-            <input type="text" [(ngModel)]="regLastName" name="lname" placeholder="Enter last name" />
+            <input
+              type="text"
+              [(ngModel)]="regLastName"
+              name="lname"
+              placeholder="Enter last name"
+              [class.input-error]="submitted && !regLastName"
+            />
+            <span class="error-label" *ngIf="submitted && !regLastName">Last name is required.</span>
           </div>
 
           <!-- EMAIL -->
           <div class="input-group">
             <label class="field-label">Email Address</label>
-            <input type="email" [(ngModel)]="regEmail" name="email" placeholder="example@gmail.com" />
+            <input
+              type="email"
+              [(ngModel)]="regEmail"
+              name="email"
+              placeholder="example@gmail.com"
+              [class.input-error]="submitted && !isEmailValid()"
+            />
+            <span class="error-label" *ngIf="submitted && !regEmail">Email is required.</span>
+            <span class="error-label" *ngIf="submitted && regEmail && !isEmailValid()">Invalid email format.</span>
           </div>
 
           <!-- CONTACT -->
           <div class="input-group">
             <label class="field-label">Contact Number</label>
-            <input type="text" [(ngModel)]="regContact" name="contact" placeholder="09XXXXXXXXX" />
+            <input
+              type="text"
+              [(ngModel)]="regContact"
+              name="contact"
+              placeholder="09XXXXXXXXX"
+              maxlength="11"
+              [class.input-error]="submitted && !isContactValid()"
+            />
+            <span class="error-label" *ngIf="submitted && !regContact">Contact number is required.</span>
+            <span class="error-label" *ngIf="submitted && regContact && !isContactValid()">
+              Must be 11 digits in format 09XXXXXXXXX.
+            </span>
           </div>
 
           <!-- PROVINCE -->
           <div class="input-group">
             <label class="field-label">Province</label>
-            <select [(ngModel)]="selectedProvince" name="province" (change)="onProvinceChange()">
+            <select
+              [(ngModel)]="selectedProvince"
+              name="province"
+              (change)="onProvinceChange()"
+              [class.input-error]="submitted && !selectedProvince"
+            >
               <option value="">Select Province</option>
               <option *ngFor="let province of provinces" [value]="province.code">
                 {{ province.name }}
               </option>
             </select>
+            <span class="error-label" *ngIf="submitted && !selectedProvince">Province is required.</span>
           </div>
 
           <!-- MUNICIPALITY -->
           <div class="input-group">
             <label class="field-label">Municipality</label>
-            <select [(ngModel)]="selectedMunicipality" name="municipality" (change)="onMunicipalityChange()">
+            <select
+              [(ngModel)]="selectedMunicipality"
+              name="municipality"
+              (change)="onMunicipalityChange()"
+              [class.input-error]="submitted && !selectedMunicipality"
+            >
               <option value="">Select Municipality</option>
               <option *ngFor="let municipality of municipalities" [value]="municipality.code">
                 {{ municipality.name }}
               </option>
             </select>
+            <span class="error-label" *ngIf="submitted && !selectedMunicipality">Municipality is required.</span>
           </div>
 
           <!-- BARANGAY -->
           <div class="input-group">
             <label class="field-label">Barangay</label>
-            <select [(ngModel)]="selectedBarangay" name="barangay">
+            <select
+              [(ngModel)]="selectedBarangay"
+              name="barangay"
+              [class.input-error]="submitted && !selectedBarangay"
+            >
               <option value="">Select Barangay</option>
               <option *ngFor="let barangay of barangays" [value]="barangay.name">
                 {{ barangay.name }}
               </option>
             </select>
+            <span class="error-label" *ngIf="submitted && !selectedBarangay">Barangay is required.</span>
           </div>
 
           <!-- DATE OF BIRTH -->
           <div class="input-group">
             <label class="field-label">Date of Birth</label>
-            <input type="date" [(ngModel)]="regBirthDate" name="birth" (ngModelChange)="computeAge()" />
+            <input
+              type="date"
+              [(ngModel)]="regBirthDate"
+              name="birth"
+              (ngModelChange)="computeAge()"
+              [class.input-error]="submitted && (!regBirthDate || (regAge !== null && regAge <= 15))"
+            />
+            <span class="error-label" *ngIf="submitted && !regBirthDate">Date of birth is required.</span>
+            <span class="error-label" *ngIf="submitted && regBirthDate && regAge !== null && regAge <= 15">
+              Must be at least 16 years old.
+            </span>
           </div>
 
           <!-- AGE -->
@@ -137,17 +197,29 @@
           <!-- GENDER -->
           <div class="input-group">
             <label class="field-label">Gender</label>
-            <select [(ngModel)]="regGender" name="gender">
+            <select
+              [(ngModel)]="regGender"
+              name="gender"
+              [class.input-error]="submitted && !regGender"
+            >
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
+            <span class="error-label" *ngIf="submitted && !regGender">Gender is required.</span>
           </div>
 
           <!-- USERNAME -->
           <div class="input-group">
             <label class="field-label">Username</label>
-            <input type="text" [(ngModel)]="regUsername" name="username" placeholder="Enter username" />
+            <input
+              type="text"
+              [(ngModel)]="regUsername"
+              name="username"
+              placeholder="Enter username"
+              [class.input-error]="submitted && !regUsername"
+            />
+            <span class="error-label" *ngIf="submitted && !regUsername">Username is required.</span>
           </div>
 
           <!-- PASSWORD -->
@@ -157,10 +229,15 @@
               [type]="showRegisterPassword ? 'text' : 'password'"
               [(ngModel)]="regPassword"
               name="password"
-              placeholder="Enter password"
+              placeholder="Enter password (min 6 chars, 1 uppercase, 1 number)"
+              [class.input-error]="submitted && !isPasswordValid()"
             />
             <span class="eye-icon" (click)="toggleRegisterPassword()">
               {{ showRegisterPassword ? '👁️' : '🙈' }}
+            </span>
+            <span class="error-label" *ngIf="submitted && !regPassword">Password is required.</span>
+            <span class="error-label" *ngIf="submitted && regPassword && !isPasswordValid()">
+              Must be at least 6 characters with 1 uppercase letter and 1 number.
             </span>
           </div>
 
@@ -191,7 +268,13 @@
 <!-- POPUP -->
 <div class="popup" *ngIf="popupMessage">
   <div class="popup-content">
+    <div class="popup-icon" *ngIf="isSuccessPopup">✅</div>
+    <div class="popup-icon" *ngIf="!isSuccessPopup">⚠️</div>
     <p>{{ popupMessage }}</p>
-    <button (click)="closePopup()">OK</button>
+    <button
+      class="popup-btn"
+      [class.popup-btn-success]="isSuccessPopup"
+      (click)="closePopup()"
+    >OK</button>
   </div>
 </div>

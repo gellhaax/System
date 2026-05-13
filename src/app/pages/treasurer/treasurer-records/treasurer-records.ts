@@ -221,6 +221,7 @@ export class Records implements OnInit, OnDestroy {
     });
   }
 
+  // ✅ FIXED: addRecord now correctly saves the first transaction using the user‑entered studentId
   addRecord() {
     if (!this.newRecord.studentId?.trim()) { alert("Student ID is required!"); return; }
     if (!this.newRecord.firstName?.trim()) { alert("First Name is required!"); return; }
@@ -234,37 +235,42 @@ export class Records implements OnInit, OnDestroy {
 
     this.computeBalance(this.newRecord);
 
-    const formData = new FormData();
-    formData.append('studentId', this.newRecord.studentId);
-    formData.append('firstName', this.newRecord.firstName);
-    formData.append('middleName', this.newRecord.middleName);
-    formData.append('lastName', this.newRecord.lastName);
-    formData.append('course', this.newRecord.course);
-    formData.append('year', this.newRecord.year);
+    // Step 1: Build student form data (no transaction)
+    const studentFormData = new FormData();
+    studentFormData.append('studentId', this.newRecord.studentId);
+    studentFormData.append('firstName', this.newRecord.firstName);
+    studentFormData.append('middleName', this.newRecord.middleName);
+    studentFormData.append('lastName', this.newRecord.lastName);
+    studentFormData.append('course', this.newRecord.course);
+    studentFormData.append('year', this.newRecord.year);
 
-    const transactionData = {
-      fee: this.newRecord.fee,
-      amount: this.newRecord.amount,
-      method: this.newRecord.method,
-      balance: this.newRecord.balance,
-      status: this.newRecord.status,
-      date: this.newRecord.date
-    };
+    // Step 2: Create the student
+    this.http.post<any>(`${this.apiUrl}/students`, studentFormData).subscribe({
+      next: (response) => {
+        // Step 3: Add the first transaction using the SAME studentId
+        const transactionFormData = new FormData();
+        transactionFormData.append('studentId', this.newRecord.studentId);
+        transactionFormData.append('fee', this.newRecord.fee);
+        transactionFormData.append('amount', this.newRecord.amount.toString());
+        transactionFormData.append('method', this.newRecord.method);
+        transactionFormData.append('balance', this.newRecord.balance.toString());
+        transactionFormData.append('status', this.newRecord.status);
+        transactionFormData.append('date', this.newRecord.date);
 
-    formData.append('transactions', JSON.stringify([transactionData]));
+        if (this.newRecord.selectedFile) {
+          transactionFormData.append('receipt', this.newRecord.selectedFile, this.newRecord.selectedFile.name);
+        }
 
-    if (this.newRecord.selectedFile) {
-      formData.append('receipt', this.newRecord.selectedFile, this.newRecord.selectedFile.name);
-    }
-
-    this.http.post<any>(`${this.apiUrl}/students`, formData).subscribe({
-      next: () => {
-        alert("Student added successfully!");
-        this.closeAddForm();
-        this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
-          next: (data) => {
-            this.records = [...data];
-            this.cdr.detectChanges();
+        this.http.post<any>(`${this.apiUrl}/transactions`, transactionFormData).subscribe({
+          next: () => {
+            alert("Student and initial payment added successfully!");
+            this.closeAddForm();
+            this.loadRecords();
+          },
+          error: (err) => {
+            alert("Student was created, but the first payment failed: " + (err.error?.error || "Unknown error"));
+            this.closeAddForm();
+            this.loadRecords();
           }
         });
       },
@@ -292,10 +298,18 @@ export class Records implements OnInit, OnDestroy {
     this.cdr.detectChanges();
   }
 
+  // ✅ FIXED: Use the Firestore document ID (record.id) not the studentId
   saveEdit() {
     if (!this.selectedRecord) { alert("No record selected for editing."); return; }
 
-    this.http.put<any>(`${this.apiUrl}/students/${this.selectedRecord.studentId}`, {
+    // The student object from the server has an 'id' field which is the Firestore document ID.
+    const docId = this.selectedRecord.id;
+    if (!docId) {
+      alert("Student document ID not found. Please reload and try again.");
+      return;
+    }
+
+    this.http.put<any>(`${this.apiUrl}/students/${docId}`, {
       firstName: this.selectedRecord.firstName,
       middleName: this.selectedRecord.middleName,
       lastName: this.selectedRecord.lastName,
@@ -320,9 +334,18 @@ export class Records implements OnInit, OnDestroy {
 
   cancelEdit() { this.selectedRecord = null; this.cdr.detectChanges(); }
 
+  // ✅ FIXED: Find the correct Firestore document ID before deleting
   deleteStudent(studentId: string) {
     if (!confirm("Are you sure you want to delete this student record?")) return;
-    this.http.delete<any>(`${this.apiUrl}/students/${studentId}`).subscribe({
+
+    // Look up the server‑returned student object that matches this studentId
+    const student = this.records.find(r => r.studentId === studentId);
+    if (!student || !student.id) {
+      alert("Could not find the record's document ID. Please reload the page.");
+      return;
+    }
+
+    this.http.delete<any>(`${this.apiUrl}/students/${student.id}`).subscribe({
       next: () => {
         alert("Student deleted successfully!");
         this.filteredRecords = [];
@@ -347,13 +370,11 @@ export class Records implements OnInit, OnDestroy {
     });
   }
 
-  // ✅ FIXED: Only show fees that the student actually has transactions for
   getRemainingBalances(student: any) {
     if (!student || !student.transactions) return [];
     
     const feeTotals: any = {};
 
-    // Only track fees that appear in the student's transactions
     student.transactions.forEach((t: any) => {
       if (!feeTotals[t.fee]) {
         feeTotals[t.fee] = {
@@ -365,7 +386,6 @@ export class Records implements OnInit, OnDestroy {
       feeTotals[t.fee].paid += Number(t.amount || 0);
     });
 
-    // Return only fees with remaining balance > 0
     return Object.values(feeTotals)
       .map((f: any) => ({
         fee: f.fee,

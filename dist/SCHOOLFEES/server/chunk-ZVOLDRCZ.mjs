@@ -1,0 +1,2 @@
+import './polyfills.server.mjs';
+import{Ia as a,cb as t,db as s,pb as o}from"./chunk-HOZFIEKR.mjs";import"./chunk-DGJQU3KY.mjs";var n=class r{static \u0275fac=function(e){return new(e||r)};static \u0275cmp=a({type:r,selectors:[["app-treasurer-dashboard"]],decls:2,vars:0,template:function(e,i){e&1&&(t(0,"p"),o(1,"treasurer-dashboard works!"),s())},encapsulation:2})};export{n as TreasurerDashboard};
