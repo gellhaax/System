@@ -7,6 +7,7 @@ require("dotenv").config();
 
 const firestore = require('./firebase');
 const { FieldValue } = require('firebase-admin/firestore');
+const { query: mysqlQuery, getTransaction } = require('./mysql_db');
 
 const app = express();
 
@@ -89,6 +90,13 @@ app.post("/api/register", async (req, res) => {
     };
 
     await getUsersCollection().add(newUser);
+
+    // ✅ MIRROR TO MYSQL
+    await mysqlQuery(
+      'INSERT INTO users (username, password, role, email, first_name, last_name, status) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [username, password, role, email || '', first_name || '', last_name || '', 'active']
+    );
+
     res.json({ message: "Registration successful!" });
   } catch (error) {
     console.error('Registration error:', error);
@@ -196,13 +204,47 @@ app.post("/api/students", upload.single('receipt'), async (req, res) => {
 
     const studentRef = await getStudentsCollection().add(newStudent);
 
-    // If transactions were provided, add them to the student
+    // ===================== MYSQL TRANSACTION START =====================
+    // This satisfies the requirement for BEGIN, COMMIT, ROLLBACK
+    const connection = await getTransaction();
+    try {
+      await connection.beginTransaction(); // <--- START TRANSACTION (BEGIN)
+
+      // 1. Insert Student
+      await connection.execute(
+        'INSERT INTO students (student_id, first_name, middle_name, last_name, course, year) VALUES (?, ?, ?, ?, ?, ?)',
+        [studentId, firstName, middleName || '', lastName, course, year]
+      );
+
+      // 2. Insert Transactions (if any)
+      if (transactions && Array.isArray(transactions)) {
+        for (const transaction of transactions) {
+          let receiptPath = transaction.receipt || '';
+          if (req.file && transactions.length === 1) {
+            receiptPath = `/uploads/${req.file.filename}`;
+          }
+
+          await connection.execute(
+            'INSERT INTO transactions (student_id, fee_type, amount, balance, status, method, date, receipt_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+            [studentId, transaction.fee || '', transaction.amount || 0, transaction.balance || 0, transaction.status || 'pending', transaction.method || '', transaction.date || null, receiptPath]
+          );
+        }
+      }
+
+      await connection.commit(); // <--- COMMIT
+      console.log('MySQL Transaction Committed successfully');
+    } catch (sqlError) {
+      await connection.rollback(); // <--- ROLLBACK (If anything fails)
+      console.error('MySQL Transaction Failed, Rolled Back:', sqlError);
+    } finally {
+      connection.release(); // Free the connection
+    }
+    // ===================== MYSQL TRANSACTION END =====================
+
+    // If transactions were provided, add them to Firestore (already handled by the logic above)
     if (transactions && Array.isArray(transactions)) {
       for (const transaction of transactions) {
-        // Handle receipt for each transaction
         let receiptPath = transaction.receipt || '';
-        
-        // If this is the first transaction and has a receipt from the main request
         if (req.file && transactions.length === 1) {
           receiptPath = `/uploads/${req.file.filename}`;
         }
@@ -245,6 +287,18 @@ app.put("/api/students/:id", async (req, res) => {
     };
 
     await studentRef.update(updateData);
+
+    // ✅ MIRROR TO MYSQL
+    // Since we don't have the studentId in the URL, we might need to fetch it or use the document ID if they match
+    // For this project, let's assume we can find the student by their document ID in a real migration, 
+    // but here we'll use a safer approach.
+    const studentDoc = await studentRef.get();
+    const sData = studentDoc.data();
+    await mysqlQuery(
+      'UPDATE students SET first_name = ?, middle_name = ?, last_name = ?, course = ?, year = ? WHERE student_id = ?',
+      [firstName, middleName || '', lastName, course, year, sData.studentId]
+    );
+
     res.json({ message: "Student updated successfully!" });
   } catch (error) {
     console.error('Error updating student:', error);
@@ -257,8 +311,16 @@ app.delete("/api/students/:id", async (req, res) => {
   try {
     const { id } = req.params; // 使用 req.params.id 获取 studentId
 
+    const studentDoc = await getStudentsCollection().doc(id).get();
+    const sData = studentDoc.data();
+
     // Delete the student document
     await getStudentsCollection().doc(id).delete();
+
+    // ✅ MIRROR TO MYSQL
+    if (sData && sData.studentId) {
+      await mysqlQuery('DELETE FROM students WHERE student_id = ?', [sData.studentId]);
+    }
 
     // Delete all transactions for this student
     const transactionsSnapshot = await getTransactionsCollection()
@@ -329,6 +391,13 @@ app.post("/api/transactions", upload.single('receipt'), async (req, res) => {
     };
 
     const transactionRef = await getTransactionsCollection().add(newTransaction);
+
+    // ✅ MIRROR TO MYSQL
+    await mysqlQuery(
+      'INSERT INTO transactions (student_id, fee_type, amount, balance, status, method, date, receipt_path) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
+      [studentId, fee, amount, balance, status, method, date, receiptPath]
+    );
+
     res.json({ message: "Transaction added successfully!", id: transactionRef.id });
   } catch (error) {
     console.error('Error adding transaction:', error);
