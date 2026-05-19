@@ -2,7 +2,7 @@
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background: #f0f4f8;
+  background: #fdf2f8;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -22,13 +22,13 @@
 
 .admin-topbar h1 {
   font-size: 28px;
-  color: #0a1628 !important;
+  color: #1e1b4b !important;
   margin: 0;
   font-weight: 700;
 }
 
 .admin-topbar p {
-  color: #64748b !important;
+  color: #7e22ce !important;
   margin: 4px 0 0 0;
   font-size: 14px;
 }
@@ -44,8 +44,8 @@
   padding: 8px 16px;
   border-radius: 10px;
   font-size: 13px;
-  color: #0a1628 !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  color: #1e1b4b !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .admin-user-info {
@@ -55,25 +55,25 @@
   background: white;
   padding: 8px 16px;
   border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .admin-user-info .admin-welcome {
   font-weight: bold;
   font-size: 14px;
-  color: #0a1628 !important;
+  color: #1e1b4b !important;
   display: block;
 }
 
 .admin-user-info small {
-  color: #64748b !important;
+  color: #7e22ce !important;
   font-size: 11px;
 }
 
 .admin-avatar {
   width: 36px;
   height: 36px;
-  background: linear-gradient(135deg, #1565c0, #2196f3);
+  background: linear-gradient(135deg, #ec4899, #a855f7);
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -97,7 +97,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06) !important;
   transition: transform 0.2s ease;
 }
 
@@ -116,31 +116,50 @@
   flex-shrink: 0;
 }
 
-.admin-stat-icon.blue { background: #e3f2fd; }
-.admin-stat-icon.purple { background: #f3e5f5; }
-.admin-stat-icon.orange { background: #fff3e0; }
-.admin-stat-icon.green { background: #e8f5e9; }
+.admin-stat-icon.blue {
+  background: #fdf2f8;
+}
+
+.admin-stat-icon.purple {
+  background: #fce7f3;
+}
+
+.admin-stat-icon.orange {
+  background: #fae8ff;
+}
+
+.admin-stat-icon.green {
+  background: #f3e8ff;
+}
 
 .admin-stat-info p {
   margin: 0;
   font-size: 13px;
-  color: #64748b !important;
+  color: #7e22ce !important;
 }
 
 .admin-stat-info h2 {
   margin: 4px 0;
   font-size: 22px;
-  color: #0a1628 !important;
+  color: #1e1b4b !important;
   font-weight: 700;
 }
 
-.admin-stat-info h2.blue-val { color: #2196f3 !important; }
-.admin-stat-info h2.orange-val { color: #ff9800 !important; }
-.admin-stat-info h2.green-val { color: #4caf50 !important; }
+.admin-stat-info h2.blue-val {
+  color: #a855f7 !important;
+}
+
+.admin-stat-info h2.orange-val {
+  color: #c026d3 !important;
+}
+
+.admin-stat-info h2.green-val {
+  color: #9333ea !important;
+}
 
 .admin-stat-info small {
   font-size: 11px;
-  color: #94a3b8 !important;
+  color: #c084fc !important;
 }
 
 
@@ -154,7 +173,7 @@
   background: white !important;
   border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06) !important;
 }
 
 .admin-card-header {
@@ -166,13 +185,13 @@
 
 .admin-card-header h3 {
   margin: 0;
-  color: #0a1628 !important;
+  color: #1e1b4b !important;
   font-size: 16px;
   font-weight: 700;
 }
 
 .admin-view-all {
-  color: #2196f3 !important;
+  color: #a855f7 !important;
   text-decoration: none;
   font-size: 13px;
   font-weight: 500;
@@ -183,13 +202,13 @@
   align-items: center;
   gap: 12px;
   padding: 12px 0;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #fbcfe8;
 }
 
 .admin-payment-avatar {
   width: 38px;
   height: 38px;
-  background: #e3f2fd;
+  background: #fdf2f8;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -206,12 +225,12 @@
 
 .admin-payment-info strong {
   font-size: 14px;
-  color: #0a1628 !important;
+  color: #1e1b4b !important;
 }
 
 .admin-payment-info small {
   font-size: 12px;
-  color: #94a3b8 !important;
+  color: #c084fc !important;
 }
 
 .admin-payment-right {
@@ -223,12 +242,12 @@
 .admin-amount {
   font-weight: bold;
   font-size: 14px;
-  color: #0a1628 !important;
+  color: #1e1b4b !important;
 }
 
 .admin-payment-right small {
   font-size: 11px;
-  color: #94a3b8 !important;
+  color: #c084fc !important;
 }
 
 .admin-badge {
@@ -238,12 +257,19 @@
   font-weight: bold;
 }
 
-.admin-badge.paid { background: #e8f5e9; color: #4caf50 !important; }
-.admin-badge.partial { background: #fff3e0; color: #ff9800 !important; }
+.admin-badge.paid {
+  background: #f3e8ff;
+  color: #9333ea !important;
+}
+
+.admin-badge.partial {
+  background: #fae8ff;
+  color: #c026d3 !important;
+}
 
 .admin-empty {
   text-align: center;
-  color: #94a3b8 !important;
+  color: #c084fc !important;
   padding: 20px;
 }
 
@@ -251,13 +277,13 @@
   display: flex;
   gap: 16px;
   padding: 16px 0;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #fbcfe8;
 }
 
 .admin-announcement-icon {
   width: 42px;
   height: 42px;
-  background: #e3f2fd;
+  background: #fdf2f8;
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -268,17 +294,121 @@
 
 .admin-announcement-item h4 {
   margin: 0 0 4px 0;
-  color: #1565c0 !important;
+  color: #ec4899 !important;
   font-size: 14px;
 }
 
 .admin-announcement-item p {
   margin: 0 0 4px 0;
   font-size: 13px;
-  color: #64748b !important;
+  color: #7e22ce !important;
 }
 
 .admin-announcement-item small {
   font-size: 11px;
-  color: #94a3b8 !important;
+  color: #c084fc !important;
+}
+
+/* ============ PENDING BALANCE MODAL ============ */
+.clickable-card {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.clickable-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.25) !important;
+}
+
+.admin-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  backdrop-filter: blur(4px);
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.admin-modal-content {
+  background: white;
+  width: 400px;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.admin-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #fbcfe8;
+}
+
+.admin-modal-header h3 {
+  margin: 0;
+  font-size: 18px;
+  color: #1e1b4b;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #c084fc;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-btn:hover {
+  color: #ec4899;
+}
+
+.admin-modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.course-balance-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fdf2f8;
+  padding: 14px 18px;
+  border-radius: 10px;
+  transition: transform 0.2s;
+}
+
+.course-balance-item:hover {
+  transform: translateX(4px);
+  background: #fce7f3;
+}
+
+.course-name {
+  font-weight: 700;
+  color: #7e22ce;
+  font-size: 15px;
+}
+
+.course-amount {
+  font-weight: 700;
+  color: #c026d3;
+  font-size: 15px;
 }

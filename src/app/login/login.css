@@ -24,7 +24,7 @@ body {
   justify-content: center;
   align-items: center;
   padding: 20px;
-  background: linear-gradient(135deg, #0f172a, #1e3a8a, #059669);
+  background: linear-gradient(135deg, #0f172a, #c96ff0 , #059669);
 }
 
 /* =========================
@@ -73,7 +73,7 @@ body {
 
 .left-panel {
   width: 35%;
-  background: linear-gradient(180deg, #1e3a8a, #059669);
+  background: linear-gradient(180deg, #c96ff0, #de50b6);
   color: white;
   padding: 30px;
   display: flex;
@@ -101,6 +101,13 @@ body {
 .logo {
   width: 85px;
   margin-bottom: 15px;
+}
+
+.heart-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 12px;
 }
 
 /* =========================
@@ -232,13 +239,18 @@ select.input-error:focus {
 }
 
 .eye-icon {
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.eye-icon.inside {
   position: absolute;
   right: 12px;
-  top: 68%;
+  top: 50%;
   transform: translateY(-50%);
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 10;
 }
 
 /* =========================
@@ -259,7 +271,7 @@ select.input-error:focus {
   margin-top: 15px;
   border: none;
   border-radius: 8px;
-  background: linear-gradient(135deg, #1e3a8a, #059669);
+  background: linear-gradient(135deg, #c96ff0, #de50b6);
   color: white;
   font-size: 14px;
   font-weight: 600;
@@ -365,11 +377,11 @@ select.input-error:focus {
 
 /* Success OK button */
 .popup-btn-success {
-  background: linear-gradient(135deg, #1e3a8a, #059669);
+  background: linear-gradient(135deg, #c96ff0, #de50b6);
 }
 
 .popup-btn-success:hover {
-  background: linear-gradient(135deg, #1e40af, #047857);
+  background: linear-gradient(135deg, #c96ff0, #de50b6);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
 }
@@ -399,5 +411,130 @@ select.input-error:focus {
 
   .full-width {
     grid-column: span 1;
+  }
+}
+
+/* =========================
+   NEW FORMAT STYLES
+========================= */
+
+.login-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1e1138;
+  margin-bottom: 4px;
+}
+
+.uppercase-subtitle {
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  color: #9ca3af;
+  margin-bottom: 30px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #9ca3af;
+  z-index: 10;
+}
+
+.right-icon {
+  position: absolute;
+  right: 12px;
+  color: #9ca3af;
+  z-index: 10;
+}
+
+input.with-icon,
+select.with-icon {
+  padding-left: 38px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #9ca3af;
+  margin: 20px 0;
+  font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+.invisible-label {
+  visibility: hidden;
+}
+
+.left-title {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.left-title strong {
+  font-weight: 600;
+}
+
+.left-panel {
+  justify-content: space-between;
+}
+
+.left-top {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-bottom {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.85;
+}
+
+.left-bottom p {
+  font-size: 12px;
+  letter-spacing: 1px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.right-title {
+  text-transform: uppercase;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e1138;
+  margin-bottom: 25px;
+}
+
+.empty-cell {
+  display: none;
+}
+
+@media (min-width: 901px) {
+  .empty-cell {
+    display: block;
   }
 }

@@ -21,7 +21,7 @@
 }
 
 .settings-header h2 {
-  color: #065f46;
+  color: #1e1b4b;
   font-size: 24px;
   margin: 0;
 }
@@ -40,9 +40,9 @@
 
 .btn-outline {
   padding: 8px 14px;
-  border: 1px solid #10b981;
+  border: 1px solid #ec4899;
   background: transparent;
-  color: #065f46;
+  color: #1e1b4b;
   border-radius: 8px;
   cursor: pointer;
   font-weight: 600;
@@ -51,7 +51,7 @@
 .btn-solid {
   padding: 8px 14px;
   border: none;
-  background: #065f46;
+  background: #1e1b4b;
   color: white;
   border-radius: 8px;
   cursor: pointer;
@@ -70,11 +70,11 @@
   background: #fff;
   border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 6px 18px  #065f46;
+  box-shadow: 0 6px 18px  #1e1b4b;
 }
 
 .card h3 {
-  color: #065f46;
+  color: #1e1b4b;
   margin-bottom: 16px;
   font-size: 16px;
 }
@@ -98,7 +98,7 @@
 }
 
 .info-row b {
-  color: #078b66;
+  color: #c823b7;
   font-size: 14px;
 }
 
@@ -108,12 +108,12 @@ input {
   padding: 10px;
   margin-top: 8px;
   border-radius: 8px;
-  border: 1px solid #d1fae5;
+  border: 1px solid #fce7f3;
   outline: none;
 }
 
 input:focus {
-  border-color: #10b981;
+  border-color: #ec4899;
 }
 
 /* BUTTON */
@@ -123,7 +123,7 @@ input:focus {
   padding: 10px;
   border: none;
   border-radius: 8px;
-  background: #10b981;
+  background: #ec4899;
   color: white;
   cursor: pointer;
   font-weight: 600;
@@ -147,12 +147,12 @@ input:focus {
   width: 90px;
   height: 90px;
   border-radius: 50%;
-  border: 3px solid #10b981;
+  border: 3px solid #ec4899;
   object-fit: cover;
 }
 
 .message {
   font-size: 13px;
-  color: #10b981;
+  color: #ec4899;
   margin-top: 8px;
 }

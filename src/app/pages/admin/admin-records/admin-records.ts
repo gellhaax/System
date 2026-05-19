@@ -42,14 +42,14 @@ export class AdminRecords implements OnInit {
   today = new Date();
   currentWeekRange = '';
   currentMonth = '';
-  
+
   // ✅ Filter Property
   selectedPeriod: 'all' | 'daily' | 'weekly' | 'monthly' = 'all';
 
   constructor(
     private http: HttpClient,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadRecords();
@@ -78,14 +78,14 @@ export class AdminRecords implements OnInit {
       next: (transactions) => {
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        
+
         const startOfWeek = this.getStartOfWeek(new Date());
         const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-        
+
         // ✅ All-Time Earnings (total of ALL transactions - no double counting!)
         this.allTimeEarnings = transactions
           .reduce((sum, t) => sum + (parseFloat(t.amount) || 0), 0);
-        
+
         // Daily Earnings
         this.dailyEarnings = transactions
           .filter(t => {
@@ -94,23 +94,23 @@ export class AdminRecords implements OnInit {
             return tDate.getTime() === today.getTime();
           })
           .reduce((sum, t) => sum + (parseFloat(t.amount) || 0), 0);
-        
+
         // Weekly Earnings
         this.weeklyEarnings = transactions
           .filter(t => new Date(t.date) >= startOfWeek)
           .reduce((sum, t) => sum + (parseFloat(t.amount) || 0), 0);
-        
+
         // Monthly Earnings
         this.monthlyEarnings = transactions
           .filter(t => new Date(t.date) >= startOfMonth)
           .reduce((sum, t) => sum + (parseFloat(t.amount) || 0), 0);
-        
+
         // Format week range
         const endOfWeek = new Date(startOfWeek);
         endOfWeek.setDate(endOfWeek.getDate() + 6);
         this.currentWeekRange = `${this.formatDate(startOfWeek)} - ${this.formatDate(endOfWeek)}`;
         this.currentMonth = today.toLocaleString('default', { month: 'long', year: 'numeric' });
-        
+
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error calculating earnings:', err)
@@ -125,15 +125,15 @@ export class AdminRecords implements OnInit {
   // ✅ NEW: Filter records by selected period
   filterByPeriod(period: 'all' | 'daily' | 'weekly' | 'monthly') {
     this.selectedPeriod = period;
-    
+
     if (period === 'all') {
       this.displayedRecords = [...this.records];
     } else {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      
+
       let startDate = new Date();
-      
+
       if (period === 'daily') {
         startDate = today;
       } else if (period === 'weekly') {
@@ -141,13 +141,13 @@ export class AdminRecords implements OnInit {
       } else if (period === 'monthly') {
         startDate = new Date(today.getFullYear(), today.getMonth(), 1);
       }
-      
+
       // Filter students who have transactions within the selected period
       this.displayedRecords = this.records.filter(student => {
         return (student.transactions || []).some((t: any) => {
           const tDate = new Date(t.date);
           tDate.setHours(0, 0, 0, 0);
-          
+
           if (period === 'daily') {
             return tDate.getTime() === today.getTime();
           } else {
@@ -156,7 +156,7 @@ export class AdminRecords implements OnInit {
         });
       });
     }
-    
+
     this.cdr.detectChanges();
   }
 
@@ -218,7 +218,7 @@ export class AdminRecords implements OnInit {
 
   getTotalPaid(student: any): number {
     if (!student.transactions || student.transactions.length === 0) return 0;
-    
+
     return student.transactions.reduce((total: number, t: any) => {
       return total + (Number(t.amount) || 0);
     }, 0);
@@ -232,8 +232,8 @@ export class AdminRecords implements OnInit {
       "tuition fee": 5000
     };
 
-    const paidAmounts: {[key: string]: number} = {};
-    
+    const paidAmounts: { [key: string]: number } = {};
+
     (student.transactions || []).forEach((t: any) => {
       const feeKey = (t.fee || '').toString().toLowerCase().trim();
       if (feeKey && !paidAmounts[feeKey]) {
@@ -245,7 +245,7 @@ export class AdminRecords implements OnInit {
     });
 
     let totalBalance = 0;
-    
+
     Object.keys(paidAmounts).forEach(feeKey => {
       const totalFeeAmount = feeMap[feeKey] || 0;
       const paidForThisFee = paidAmounts[feeKey] || 0;

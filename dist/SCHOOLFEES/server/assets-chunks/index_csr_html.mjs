@@ -10,5 +10,5 @@ export default `<!doctype html>
 <link rel="stylesheet" href="styles-NNREUR7T.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles-NNREUR7T.css"></noscript></head>
 <body ngcm="">
   <app-root></app-root>
-<link rel="modulepreload" href="chunk-C6RH5CMF.js"><link rel="modulepreload" href="chunk-ARV5AST7.js"><link rel="modulepreload" href="chunk-DONKLTYR.js"><link rel="modulepreload" href="chunk-L3FMMFM2.js"><script src="main-I4SY5CEW.js" type="module"></script></body>
+<link rel="modulepreload" href="chunk-ZOZSSOAG.js"><link rel="modulepreload" href="chunk-SY3VCNHT.js"><link rel="modulepreload" href="chunk-4C3J6FFJ.js"><link rel="modulepreload" href="chunk-L3FMMFM2.js"><script src="main-GZW7ZYC6.js" type="module"></script></body>
 </html>`;

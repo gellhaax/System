@@ -44,7 +44,7 @@ export class Records implements OnInit, OnDestroy {
     private http: HttpClient,
     private router: Router,
     private cdr: ChangeDetectorRef
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.loadRecords();
@@ -112,7 +112,7 @@ export class Records implements OnInit, OnDestroy {
 
     const remaining = this.getRemainingForFee(student.studentId, this.newTransaction.fee);
     let paid = Number(this.newTransaction.amount || 0);
-    
+
     if (paid < 0) paid = 0;
     if (paid > remaining) paid = remaining;
 
@@ -200,7 +200,7 @@ export class Records implements OnInit, OnDestroy {
     formData.append('balance', this.newTransaction.balance.toString());
     formData.append('status', this.newTransaction.status);
     formData.append('date', this.newTransaction.date);
-    
+
     if (this.newTransaction.selectedFile) {
       formData.append('receipt', this.newTransaction.selectedFile, this.newTransaction.selectedFile.name);
     }
@@ -372,7 +372,7 @@ export class Records implements OnInit, OnDestroy {
 
   getRemainingBalances(student: any) {
     if (!student || !student.transactions) return [];
-    
+
     const feeTotals: any = {};
 
     student.transactions.forEach((t: any) => {

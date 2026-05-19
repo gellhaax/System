@@ -1,15 +1,15 @@
 .page {
   padding: 30px;
-  background: #f0fdf4;
+  background: #fdf2f8;
   min-height: 100vh;
-  font-family: 'Segoe UI', sans-serif;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
 }
 
 .title {
-  color: #065f46;
+  color: #1e1b4b;
   margin-bottom: 20px;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.5px;
 }
 
@@ -25,21 +25,21 @@
   width: 320px;
   padding: 12px 16px;
   border-radius: 10px;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #fbcfe8;
   outline: none;
   background: #fff;
   font-size: 14px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
   transition: 0.3s;
 }
 
 .top-bar input:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
 }
 
 .add-btn {
-  background: linear-gradient(135deg, #065f46, #10b981);
+  background: linear-gradient(135deg, #ec4899, #a855f7);
   color: white;
   border: none;
   padding: 10px 22px;
@@ -48,12 +48,12 @@
   font-weight: 600;
   font-size: 14px;
   transition: 0.3s;
-  box-shadow: 0 4px 12px rgba(6, 95, 70, 0.2);
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
 }
 
 .add-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(6, 95, 70, 0.3);
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.3);
 }
 
 /* LAYOUT */
@@ -61,15 +61,30 @@
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 24px;
+  align-items: start;
+}
+
+.left, .right {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* CARD */
 .card {
   background: #ffffff;
-  padding: 20px;
+  padding: 24px;
   border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 16px rgba(236, 72, 153, 0.08);
   transition: 0.3s;
+  overflow-x: auto;
 }
 
 .card:hover {
@@ -77,7 +92,7 @@
 }
 
 .card h3 {
-  color: #065f46;
+  color: #1e1b4b;
   margin-bottom: 14px;
   font-size: 16px;
   font-weight: 700;
@@ -93,7 +108,7 @@ table {
 }
 
 th {
-  background: linear-gradient(135deg, #065f46, #059669);
+  background: linear-gradient(135deg, #1e1b4b, #a855f7);
   color: white;
   padding: 12px;
   font-size: 13px;
@@ -103,21 +118,21 @@ th {
 
 td {
   padding: 11px;
-  border-bottom: 1px solid #ecfdf5;
+  border-bottom: 1px solid #fdf2f8;
   text-align: center;
   font-size: 14px;
   color: #334155;
 }
 
 tr:hover td {
-  background: #ecfdf5;
-  color: #065f46;
+  background: #fdf2f8;
+  color: #1e1b4b;
 }
 
 /* STATUS */
 .paid {
-  background: #d1fae5;
-  color: #065f46;
+  background: #fce7f3;
+  color: #1e1b4b;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 12px;
@@ -140,35 +155,64 @@ tr:hover td {
   padding: 10px 14px;
   margin-bottom: 12px;
   border-radius: 8px;
-  border: 1px solid #a7f3d0;
+  border: 1px solid #fbcfe8;
   outline: none;
   font-size: 14px;
   transition: 0.3s;
-  background: #f0fdf4;
+  background: #fdf2f8;
+}
+
+.right input[type="file"] {
+  padding: 8px;
+  background: #fff;
+  border: 1px dashed #ec4899;
+  color: #a855f7;
+  cursor: pointer;
+  border-radius: 8px;
 }
 
 .right input:focus,
 .right select:focus {
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
 }
 
-/* CANCEL BUTTON */
-.cancel-btn {
+/* ACTION BUTTONS */
+.save-btn {
   width: 100%;
-  background: #f1f5f9;
-  color: #64748b;
-  padding: 10px;
+  background: linear-gradient(135deg, #ec4899, #a855f7);
+  color: white;
+  padding: 12px;
   border: none;
   border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 8px;
+  margin-top: 15px;
+  margin-bottom: 8px;
+  transition: 0.3s;
+  box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+}
+
+.save-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(236, 72, 153, 0.35);
+}
+
+.cancel-btn {
+  width: 100%;
+  background: #fdf2f8;
+  color: #db2777;
+  padding: 12px;
+  border: 1px solid #fbcfe8;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
   transition: 0.3s;
 }
 
 .cancel-btn:hover {
-  background: #e2e8f0;
+  background: #fce7f3;
+  color: #be185d;
 }
 
 /* Receipt thumbnail styles */
@@ -185,7 +229,7 @@ tr:hover td {
 .receipt-thumbnail:hover {
   transform: scale(1.05);
   border-color: #4a90e2;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Modal styles */
@@ -233,7 +277,7 @@ tr:hover td {
 .receipt-modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -279,6 +323,7 @@ tr:hover td {
     transform: scale(.8);
     opacity: 0;
   }
+
   to {
     transform: scale(1);
     opacity: 1;

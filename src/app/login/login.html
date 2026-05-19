@@ -7,41 +7,64 @@
     ===================== -->
     <div class="card" *ngIf="showLoginSection">
 
-      <img src="/finalogo.png" class="logo" alt="Logo" />
+      <div class="heart-icon-wrapper">
+        <img src="/finalogo.png" class="logo" alt="Logo" />
+      </div>
 
-      <h1>Welcome Back</h1>
-      <p class="subtitle">Sign in to your account</p>
+      <h1 class="login-title">Hello, There!</h1>
+      <p class="subtitle uppercase-subtitle">LOGIN / REGISTER TO YOUR ACCOUNT</p>
 
       <!-- USERNAME -->
       <div class="input-group">
         <label class="field-label">Username</label>
-        <input
-          type="text"
-          [(ngModel)]="loginUsername"
-          name="loginUsername"
-          placeholder="Enter username"
-        />
+        <div class="input-wrapper">
+          <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <input type="text" class="with-icon" [(ngModel)]="loginUsername" name="loginUsername"
+            placeholder="Enter Username" />
+        </div>
       </div>
 
       <!-- PASSWORD -->
       <div class="input-group password-field" style="margin-top:12px;">
         <label class="field-label">Password</label>
-        <input
-          [type]="showLoginPassword ? 'text' : 'password'"
-          [(ngModel)]="loginPassword"
-          name="loginPassword"
-          placeholder="Enter password"
-        />
-        <span class="eye-icon" (click)="toggleLoginPassword()">
-          {{ showLoginPassword ? '👁️' : '🙈' }}
-        </span>
+        <div class="input-wrapper">
+          <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+          <input [type]="showLoginPassword ? 'text' : 'password'" class="with-icon" [(ngModel)]="loginPassword"
+            name="loginPassword" placeholder="Enter Password" />
+          <span class="eye-icon inside" (click)="toggleLoginPassword()">
+            <svg *ngIf="!showLoginPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+              </path>
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+            </svg>
+            <svg *ngIf="showLoginPassword" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+              stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </span>
+        </div>
       </div>
 
-      <button class="main-btn" (click)="login()">Login</button>
+      <button class="main-btn" (click)="login()">LOGIN</button>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
 
       <p class="switch-text">
         Don't have an account?
-        <a (click)="showRegister()">Register here</a>
+        <a (click)="showRegister()">Register here.</a>
       </p>
 
     </div>
@@ -53,194 +76,246 @@
 
       <!-- LEFT PANEL -->
       <div class="left-panel">
-        <img src="/finalogo.png" class="logo" alt="Logo" />
-        <h2>Create Account</h2>
-        <p>Fill in the details to register a new user.</p>
+        <div class="left-top">
+          <img src="/finalogo.png" class="logo" alt="Logo" />
+          <h2 class="left-title"><strong> School Fees </strong><br><strong>Management System</strong></h2>
+        </div>
+        <div class="left-bottom">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+          </svg>
+          <p>USTP VILLANUEVA</p>
+        </div>
       </div>
 
       <!-- RIGHT PANEL -->
       <div class="right-panel">
 
-        <h2>Register</h2>
+        <h2 class="right-title">CREATE AN ACCOUNT</h2>
 
         <div class="grid">
 
+          <!-- ROW 1 -->
           <!-- FIRST NAME -->
           <div class="input-group">
-            <label class="field-label">First Name</label>
-            <input
-              type="text"
-              [(ngModel)]="regFirstName"
-              name="fname"
-              placeholder="Enter first name"
-              [class.input-error]="submitted && !regFirstName"
-            />
-            <span class="error-label" *ngIf="submitted && !regFirstName">First name is required.</span>
-          </div>
-
-          <!-- LAST NAME -->
-          <div class="input-group">
-            <label class="field-label">Last Name</label>
-            <input
-              type="text"
-              [(ngModel)]="regLastName"
-              name="lname"
-              placeholder="Enter last name"
-              [class.input-error]="submitted && !regLastName"
-            />
-            <span class="error-label" *ngIf="submitted && !regLastName">Last name is required.</span>
+            <label class="field-label">First name</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" class="with-icon" [(ngModel)]="regFirstName" name="fname"
+                placeholder="Enter first name" [class.input-error]="submitted && !regFirstName" />
+            </div>
+            <span class="error-label" *ngIf="submitted && !regFirstName">Required.</span>
           </div>
 
           <!-- EMAIL -->
           <div class="input-group">
-            <label class="field-label">Email Address</label>
-            <input
-              type="email"
-              [(ngModel)]="regEmail"
-              name="email"
-              placeholder="example@gmail.com"
-              [class.input-error]="submitted && !isEmailValid()"
-            />
-            <span class="error-label" *ngIf="submitted && !regEmail">Email is required.</span>
-            <span class="error-label" *ngIf="submitted && regEmail && !isEmailValid()">Invalid email format.</span>
+            <label class="field-label">Email address</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                <polyline points="22,6 12,13 2,6"></polyline>
+              </svg>
+              <input type="email" class="with-icon" [(ngModel)]="regEmail" name="email"
+                placeholder="Enter email address" [class.input-error]="submitted && !isEmailValid()" />
+            </div>
+            <span class="error-label" *ngIf="submitted && !regEmail">Required.</span>
+            <span class="error-label" *ngIf="submitted && regEmail && !isEmailValid()">Invalid format.</span>
+          </div>
+
+          <!-- ROW 2 -->
+          <!-- MIDDLE NAME -->
+          <div class="input-group">
+            <label class="field-label">Middle name</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" class="with-icon" [(ngModel)]="regMiddleName" name="mname"
+                placeholder="Enter middle name" />
+            </div>
           </div>
 
           <!-- CONTACT -->
           <div class="input-group">
-            <label class="field-label">Contact Number</label>
-            <input
-              type="text"
-              [(ngModel)]="regContact"
-              name="contact"
-              placeholder="09XXXXXXXXX"
-              maxlength="11"
-              [class.input-error]="submitted && !isContactValid()"
-            />
-            <span class="error-label" *ngIf="submitted && !regContact">Contact number is required.</span>
-            <span class="error-label" *ngIf="submitted && regContact && !isContactValid()">
-              Must be 11 digits in format 09XXXXXXXXX.
-            </span>
+            <label class="field-label">Contact number</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                </path>
+              </svg>
+              <input type="text" class="with-icon" [(ngModel)]="regContact" name="contact"
+                placeholder="Enter contact number" maxlength="11"
+                [class.input-error]="submitted && !isContactValid()" />
+            </div>
+            <span class="error-label" *ngIf="submitted && !regContact">Required.</span>
+            <span class="error-label" *ngIf="submitted && regContact && !isContactValid()">11 digits required.</span>
           </div>
 
-          <!-- PROVINCE -->
+          <!-- ROW 3 -->
+          <!-- LAST NAME -->
           <div class="input-group">
-            <label class="field-label">Province</label>
-            <select
-              [(ngModel)]="selectedProvince"
-              name="province"
-              (change)="onProvinceChange()"
-              [class.input-error]="submitted && !selectedProvince"
-            >
+            <label class="field-label">Last name</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" class="with-icon" [(ngModel)]="regLastName" name="lname" placeholder="Enter last name"
+                [class.input-error]="submitted && !regLastName" />
+            </div>
+            <span class="error-label" *ngIf="submitted && !regLastName">Required.</span>
+          </div>
+
+          <!-- ADDRESS: PROVINCE -->
+          <div class="input-group">
+            <label class="field-label">Address</label>
+            <select [(ngModel)]="selectedProvince" name="province" (change)="onProvinceChange()"
+              [class.input-error]="submitted && !selectedProvince">
               <option value="">Select Province</option>
               <option *ngFor="let province of provinces" [value]="province.code">
                 {{ province.name }}
               </option>
             </select>
-            <span class="error-label" *ngIf="submitted && !selectedProvince">Province is required.</span>
+            <span class="error-label" *ngIf="submitted && !selectedProvince">Required.</span>
           </div>
 
-          <!-- MUNICIPALITY -->
+          <!-- ROW 4 -->
+          <!-- DATE OF BIRTH -->
           <div class="input-group">
-            <label class="field-label">Municipality</label>
-            <select
-              [(ngModel)]="selectedMunicipality"
-              name="municipality"
-              (change)="onMunicipalityChange()"
-              [class.input-error]="submitted && !selectedMunicipality"
-            >
+            <label class="field-label">Date of Birth</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              <input type="date" class="with-icon" [(ngModel)]="regBirthDate" name="birth"
+                (ngModelChange)="computeAge()"
+                [class.input-error]="submitted && (!regBirthDate || (regAge !== null && regAge <= 15))" />
+            </div>
+            <span class="error-label" *ngIf="submitted && !regBirthDate">Required.</span>
+            <span class="error-label" *ngIf="submitted && regBirthDate && regAge !== null && regAge <= 15">Must be
+              16+.</span>
+          </div>
+
+          <!-- ADDRESS: MUNICIPALITY -->
+          <div class="input-group">
+            <label class="field-label invisible-label">Municipality Spacer</label>
+            <select [(ngModel)]="selectedMunicipality" name="municipality" (change)="onMunicipalityChange()"
+              [class.input-error]="submitted && !selectedMunicipality">
               <option value="">Select Municipality</option>
               <option *ngFor="let municipality of municipalities" [value]="municipality.code">
                 {{ municipality.name }}
               </option>
             </select>
-            <span class="error-label" *ngIf="submitted && !selectedMunicipality">Municipality is required.</span>
+            <span class="error-label" *ngIf="submitted && !selectedMunicipality">Required.</span>
           </div>
 
-          <!-- BARANGAY -->
+          <!-- ROW 5 -->
+          <!-- AGE -->
           <div class="input-group">
-            <label class="field-label">Barangay</label>
-            <select
-              [(ngModel)]="selectedBarangay"
-              name="barangay"
-              [class.input-error]="submitted && !selectedBarangay"
-            >
+            <label class="field-label">Age</label>
+            <div class="input-wrapper">
+              <input type="number" [(ngModel)]="regAge" name="age" readonly placeholder="Auto calculated" />
+              <svg class="right-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="right:12px; position:absolute;">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+                <line x1="8" y1="6" x2="16" y2="6"></line>
+                <line x1="16" y1="10" x2="16" y2="10"></line>
+                <line x1="12" y1="10" x2="12" y2="10"></line>
+                <line x1="8" y1="10" x2="8" y2="10"></line>
+              </svg>
+            </div>
+          </div>
+
+          <!-- ADDRESS: BARANGAY -->
+          <div class="input-group">
+            <label class="field-label invisible-label">Barangay Spacer</label>
+            <select [(ngModel)]="selectedBarangay" name="barangay" [class.input-error]="submitted && !selectedBarangay">
               <option value="">Select Barangay</option>
               <option *ngFor="let barangay of barangays" [value]="barangay.name">
                 {{ barangay.name }}
               </option>
             </select>
-            <span class="error-label" *ngIf="submitted && !selectedBarangay">Barangay is required.</span>
+            <span class="error-label" *ngIf="submitted && !selectedBarangay">Required.</span>
           </div>
 
-          <!-- DATE OF BIRTH -->
+          <!-- ROW 6 -->
+          <!-- USERNAME -->
           <div class="input-group">
-            <label class="field-label">Date of Birth</label>
-            <input
-              type="date"
-              [(ngModel)]="regBirthDate"
-              name="birth"
-              (ngModelChange)="computeAge()"
-              [class.input-error]="submitted && (!regBirthDate || (regAge !== null && regAge <= 15))"
-            />
-            <span class="error-label" *ngIf="submitted && !regBirthDate">Date of birth is required.</span>
-            <span class="error-label" *ngIf="submitted && regBirthDate && regAge !== null && regAge <= 15">
-              Must be at least 16 years old.
-            </span>
-          </div>
-
-          <!-- AGE -->
-          <div class="input-group">
-            <label class="field-label">Age</label>
-            <input type="number" [(ngModel)]="regAge" name="age" readonly placeholder="Auto Computed" />
+            <label class="field-label">Set Username</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input type="text" class="with-icon" [(ngModel)]="regUsername" name="username"
+                placeholder="Enter Username" [class.input-error]="submitted && !regUsername" />
+            </div>
+            <span class="error-label" *ngIf="submitted && !regUsername">Required.</span>
           </div>
 
           <!-- GENDER -->
           <div class="input-group">
-            <label class="field-label">Gender</label>
-            <select
-              [(ngModel)]="regGender"
-              name="gender"
-              [class.input-error]="submitted && !regGender"
-            >
+            <label class="field-label invisible-label">Gender Spacer</label>
+            <select [(ngModel)]="regGender" name="gender" [class.input-error]="submitted && !regGender">
               <option value="">Select Gender</option>
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
-            <span class="error-label" *ngIf="submitted && !regGender">Gender is required.</span>
+            <span class="error-label" *ngIf="submitted && !regGender">Required.</span>
           </div>
 
-          <!-- USERNAME -->
-          <div class="input-group">
-            <label class="field-label">Username</label>
-            <input
-              type="text"
-              [(ngModel)]="regUsername"
-              name="username"
-              placeholder="Enter username"
-              [class.input-error]="submitted && !regUsername"
-            />
-            <span class="error-label" *ngIf="submitted && !regUsername">Username is required.</span>
-          </div>
-
+          <!-- ROW 7 -->
           <!-- PASSWORD -->
-          <div class="input-group full-width password-field">
-            <label class="field-label">Password</label>
-            <input
-              [type]="showRegisterPassword ? 'text' : 'password'"
-              [(ngModel)]="regPassword"
-              name="password"
-              placeholder="Enter password (min 6 chars, 1 uppercase, 1 number)"
-              [class.input-error]="submitted && !isPasswordValid()"
-            />
-            <span class="eye-icon" (click)="toggleRegisterPassword()">
-              {{ showRegisterPassword ? '👁️' : '🙈' }}
-            </span>
-            <span class="error-label" *ngIf="submitted && !regPassword">Password is required.</span>
-            <span class="error-label" *ngIf="submitted && regPassword && !isPasswordValid()">
-              Must be at least 6 characters with 1 uppercase letter and 1 number.
-            </span>
+          <div class="input-group password-field">
+            <label class="field-label">Set Password</label>
+            <div class="input-wrapper">
+              <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9ca3af"
+                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input [type]="showRegisterPassword ? 'text' : 'password'" class="with-icon" [(ngModel)]="regPassword"
+                name="password" placeholder="Enter Password" [class.input-error]="submitted && !isPasswordValid()" />
+              <span class="eye-icon inside" (click)="toggleRegisterPassword()">
+                <svg *ngIf="!showRegisterPassword" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path
+                    d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                  </path>
+                  <line x1="1" y1="1" x2="23" y2="23"></line>
+                </svg>
+                <svg *ngIf="showRegisterPassword" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                  stroke="#9ca3af" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                  <circle cx="12" cy="12" r="3"></circle>
+                </svg>
+              </span>
+            </div>
+            <span class="error-label" *ngIf="submitted && !regPassword">Required.</span>
+            <span class="error-label" *ngIf="submitted && regPassword && !isPasswordValid()">Min 6 chars, 1 uppercase, 1
+              number.</span>
           </div>
 
+          <div class="empty-cell"></div>
+
+          <!-- ROW 8 -->
           <!-- ROLE -->
           <div class="input-group">
             <label class="field-label">Role</label>
@@ -250,13 +325,19 @@
             </select>
           </div>
 
+          <div class="empty-cell"></div>
+
         </div>
 
-        <button class="main-btn" (click)="register()">Register</button>
+        <button class="main-btn" (click)="register()">REGISTER</button>
+
+        <div class="divider">
+          <span>or</span>
+        </div>
 
         <p class="switch-text">
           Already have an account?
-          <a (click)="showLogin()">Login here</a>
+          <a (click)="showLogin()">Login here.</a>
         </p>
 
       </div>
@@ -271,10 +352,6 @@
     <div class="popup-icon" *ngIf="isSuccessPopup">✅</div>
     <div class="popup-icon" *ngIf="!isSuccessPopup">⚠️</div>
     <p>{{ popupMessage }}</p>
-    <button
-      class="popup-btn"
-      [class.popup-btn-success]="isSuccessPopup"
-      (click)="closePopup()"
-    >OK</button>
+    <button class="popup-btn" [class.popup-btn-success]="isSuccessPopup" (click)="closePopup()">OK</button>
   </div>
 </div>

@@ -1,22 +1,22 @@
 /* ===================================================
-   EMERALD DARK MODE — TREASURER PANEL ONLY
+   UTASK DARK MODE (PINK & PURPLE) — TREASURER PANEL ONLY
    =================================================== */
 
 body.dark-mode {
-  background: #011a13;
-  color: #d1fae5;
+  background: #151521;
+  color: #f8fafc;
 }
 
 /* ── NAVBAR ── */
 body.dark-mode .treasurer-page .navbar,
 body.dark-mode .treasurer-page nav {
-  background: #021f18;
+  background: #1e1e2d;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.4);
 }
 
 body.dark-mode .treasurer-page .navbar a,
 body.dark-mode .treasurer-page nav a {
-  color: #6ee7b7;
+  color: #a855f7;
 }
 
 body.dark-mode .treasurer-page nav a:hover {
@@ -29,18 +29,18 @@ body.dark-mode .treasurer-page .page-bg,
 body.dark-mode .treasurer-page .about-page,
 body.dark-mode .treasurer-page .contact-page,
 body.dark-mode .treasurer-page .page {
-  background: #011a13;
+  background: #151521;
 }
 
 /* ── PAGE TITLES ── */
 body.dark-mode .treasurer-page .title,
 body.dark-mode .treasurer-page .page-title,
 body.dark-mode .treasurer-page .settings-header h2 {
-  color: #34d399;
+  color: #f472b6;
 }
 
 body.dark-mode .treasurer-page .subtitle {
-  color: #6ee7b7;
+  color: #a855f7;
 }
 
 /* ── CARDS ── */
@@ -49,46 +49,46 @@ body.dark-mode .treasurer-page .form-card,
 body.dark-mode .treasurer-page .info-card,
 body.dark-mode .treasurer-page .feature-card,
 body.dark-mode .treasurer-page .dev-card {
-  background: #063a2a;
+  background: #1e1e2d;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
-  border-color: rgba(52, 211, 153, 0.15);
+  border-color: rgba(236, 72, 153, 0.15);
 }
 
 body.dark-mode .treasurer-page .card h3,
 body.dark-mode .treasurer-page .form-card h2,
 body.dark-mode .treasurer-page .info-card h3 {
-  color: #34d399;
-  border-bottom-color: rgba(52, 211, 153, 0.2);
+  color: #f472b6;
+  border-bottom-color: rgba(236, 72, 153, 0.2);
 }
 
 body.dark-mode .treasurer-page .feature-card h3 {
-  color: #a7f3d0;
+  color: #fce7f3;
 }
 
 body.dark-mode .treasurer-page .feature-card p,
 body.dark-mode .treasurer-page .dev-card span {
-  color: #6ee7b7;
+  color: #a855f7;
 }
 
 body.dark-mode .treasurer-page .dev-card h3 {
-  color: #34d399;
+  color: #f472b6;
 }
 
 /* ── HOME CARDS ── */
 body.dark-mode .treasurer-page .cards .card {
-  background: rgba(6, 58, 42, 0.85);
+  background: rgba(30, 30, 45, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-  border-top-color: #34d399;
+  border-top-color: #ec4899;
 }
 
 body.dark-mode .treasurer-page .cards .card h3 {
-  color: #a7f3d0;
+  color: #fce7f3;
 }
 
 body.dark-mode .treasurer-page .cards .card p {
-  color: #34d399;
+  color: #f472b6;
 }
 
 /* ── BACKGROUND IMAGE (HOME) ── */
@@ -107,35 +107,35 @@ body.dark-mode .treasurer-page select,
 body.dark-mode .treasurer-page .top-bar input,
 body.dark-mode .treasurer-page .right input,
 body.dark-mode .treasurer-page .right select {
-  background: #022c22;
-  color: #d1fae5;
-  border: 1px solid rgba(52, 211, 153, 0.3);
+  background: #151521;
+  color: #f8fafc;
+  border: 1px solid rgba(236, 72, 153, 0.3);
 }
 
 body.dark-mode .treasurer-page input::placeholder,
 body.dark-mode .treasurer-page textarea::placeholder {
-  color: #4ade80;
+  color: #db2777;
   opacity: 0.6;
 }
 
 body.dark-mode .treasurer-page input:focus,
 body.dark-mode .treasurer-page textarea:focus,
 body.dark-mode .treasurer-page select:focus {
-  border-color: #34d399;
-  box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.15);
+  border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.15);
 }
 
 /* ── LABELS ── */
 body.dark-mode .treasurer-page label,
 body.dark-mode .treasurer-page form label,
 body.dark-mode .treasurer-page .form-card label {
-  color: #a7f3d0;
+  color: #fce7f3;
 }
 
 /* ── SMALL TEXTS ── */
 body.dark-mode .treasurer-page .small,
 body.dark-mode .treasurer-page .privacy {
-  color: #6ee7b7;
+  color: #a855f7;
   opacity: 0.8;
 }
 
@@ -144,7 +144,7 @@ body.dark-mode .treasurer-page .primary-btn,
 body.dark-mode .treasurer-page .send-btn,
 body.dark-mode .treasurer-page .add-btn,
 body.dark-mode .treasurer-page .actions button {
-  background: linear-gradient(135deg, #065f46, #059669);
+  background: linear-gradient(135deg, #ec4899, #a855f7);
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
@@ -152,18 +152,18 @@ body.dark-mode .treasurer-page .actions button {
 body.dark-mode .treasurer-page .primary-btn:hover,
 body.dark-mode .treasurer-page .send-btn:hover,
 body.dark-mode .treasurer-page .add-btn:hover {
-  background: linear-gradient(135deg, #047857, #10b981);
+  background: linear-gradient(135deg, #db2777, #9333ea);
 }
 
 body.dark-mode .treasurer-page .cancel-btn {
-  background: #063a2a;
-  color: #6ee7b7;
-  border: 1px solid rgba(52, 211, 153, 0.2);
+  background: #1e1e2d;
+  color: #a855f7;
+  border: 1px solid rgba(236, 72, 153, 0.2);
 }
 
 body.dark-mode .treasurer-page .cancel-btn:hover {
-  background: #065f46;
-  color: #d1fae5;
+  background: #a855f7;
+  color: #f8fafc;
 }
 
 /* ── TABLE ── */
@@ -172,61 +172,61 @@ body.dark-mode .treasurer-page table {
 }
 
 body.dark-mode .treasurer-page th {
-  background: linear-gradient(135deg, #064e3b, #065f46);
-  color: #d1fae5;
+  background: linear-gradient(135deg, #db2777, #a855f7);
+  color: #f8fafc;
   letter-spacing: 0.8px;
 }
 
 body.dark-mode .treasurer-page td {
-  color: #d1fae5;
-  border-bottom: 1px solid rgba(52, 211, 153, 0.1);
+  color: #f8fafc;
+  border-bottom: 1px solid rgba(236, 72, 153, 0.1);
 }
 
 body.dark-mode .treasurer-page tr:hover td {
-  background: rgba(52, 211, 153, 0.08);
-  color: #a7f3d0;
+  background: rgba(236, 72, 153, 0.08);
+  color: #fce7f3;
 }
 
 /* ── STATUS BADGES ── */
 body.dark-mode .treasurer-page .paid {
-  background: rgba(52, 211, 153, 0.15);
-  color: #34d399;
+  background: rgba(236, 72, 153, 0.15);
+  color: #f472b6;
 }
 
 body.dark-mode .treasurer-page .partial {
-  background: rgba(251, 191, 36, 0.15);
-  color: #fbbf24;
+  background: rgba(168, 85, 247, 0.15);
+  color: #c084fc;
 }
 
 /* ── SETTINGS INFO ROWS ── */
 body.dark-mode .treasurer-page .info-row {
-  border-bottom: 1px solid rgba(52, 211, 153, 0.12);
+  border-bottom: 1px solid rgba(236, 72, 153, 0.12);
 }
 
 body.dark-mode .treasurer-page .info-row .left {
-  color: #6ee7b7;
+  color: #a855f7;
   font-weight: 600;
 }
 
 body.dark-mode .treasurer-page .info-row .right {
-  color: #d1fae5;
+  color: #f8fafc;
 }
 
 body.dark-mode .treasurer-page .info-row i {
-  color: #34d399;
+  color: #f472b6;
 }
 
 /* ── CONTACT INFO ITEMS ── */
 body.dark-mode .treasurer-page .info-item strong {
-  color: #34d399;
+  color: #f472b6;
 }
 
 body.dark-mode .treasurer-page .info-item p {
-  color: #a7f3d0;
+  color: #fce7f3;
 }
 
 body.dark-mode .treasurer-page .hours p {
-  color: #a7f3d0;
+  color: #fce7f3;
 }
 
 body.dark-mode .treasurer-page .closed {
@@ -236,20 +236,20 @@ body.dark-mode .treasurer-page .closed {
 
 /* ── ABOUT HERO ── */
 body.dark-mode .treasurer-page .hero-text h1 {
-  color: #34d399;
+  color: #f472b6;
 }
 
 body.dark-mode .treasurer-page .hero-text h5 {
-  color: #6ee7b7;
+  color: #a855f7;
 }
 
 body.dark-mode .treasurer-page .hero-text p {
-  color: #a7f3d0;
+  color: #fce7f3;
 }
 
 /* ── LINKS ── */
 body.dark-mode .treasurer-page a {
-  color: #34d399;
+  color: #f472b6;
 }
 
 /* ── SCROLLBAR (TREASURER ONLY) ── */
@@ -258,14 +258,14 @@ body.dark-mode .treasurer-page ::-webkit-scrollbar {
 }
 
 body.dark-mode .treasurer-page ::-webkit-scrollbar-track {
-  background: #011a13;
+  background: #151521;
 }
 
 body.dark-mode .treasurer-page ::-webkit-scrollbar-thumb {
-  background: #065f46;
+  background: #ec4899;
   border-radius: 10px;
 }
 
 body.dark-mode .treasurer-page ::-webkit-scrollbar-thumb:hover {
-  background: #34d399;
+  background: #f472b6;
 }

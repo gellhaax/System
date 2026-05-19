@@ -13,7 +13,7 @@ export default {
   {
     "renderMode": 1,
     "preload": [
-      "chunk-4LT7VAZ2.js",
+      "chunk-GVGSCBVO.js",
       "chunk-OUX425KP.js"
     ],
     "route": "/admin-reports"
@@ -21,91 +21,91 @@ export default {
   {
     "renderMode": 1,
     "preload": [
-      "chunk-NVM2KWFY.js",
-      "chunk-HGBES23S.js"
+      "chunk-LLGXL4NN.js",
+      "chunk-P473T4LV.js"
     ],
     "route": "/login"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-LWAXACHI.js",
-      "chunk-RTKJV6AJ.js"
+      "chunk-DEL4U4FO.js",
+      "chunk-K6SBEZUR.js"
     ],
     "route": "/admin-dashboard"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-DSM2QC77.js",
-      "chunk-HGBES23S.js",
-      "chunk-RTKJV6AJ.js"
+      "chunk-OZBTI3A7.js",
+      "chunk-P473T4LV.js",
+      "chunk-K6SBEZUR.js"
     ],
     "route": "/admin-records"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-DL6AWJWI.js",
-      "chunk-HGBES23S.js",
-      "chunk-RTKJV6AJ.js"
+      "chunk-G7GPHX3W.js",
+      "chunk-P473T4LV.js",
+      "chunk-K6SBEZUR.js"
     ],
     "route": "/admin-notifications"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-SLZPR7LY.js"
+      "chunk-OMGZE7SP.js"
     ],
     "route": "/treasurer-dashboard"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-O4YSVWDE.js",
-      "chunk-JIOEO4KX.js"
+      "chunk-X2PKXWPP.js",
+      "chunk-5PVIR7WD.js"
     ],
     "route": "/treasurer-home"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-WXC7QT6L.js",
-      "chunk-JIOEO4KX.js",
-      "chunk-HGBES23S.js"
+      "chunk-DQV5JI5K.js",
+      "chunk-5PVIR7WD.js",
+      "chunk-P473T4LV.js"
     ],
     "route": "/treasurer-records"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-HLTC6X5N.js",
-      "chunk-JIOEO4KX.js",
-      "chunk-HGBES23S.js"
+      "chunk-A4UPQZK7.js",
+      "chunk-5PVIR7WD.js",
+      "chunk-P473T4LV.js"
     ],
     "route": "/treasurer-settings"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-VBYATSES.js",
-      "chunk-JIOEO4KX.js"
+      "chunk-27CDAB5P.js",
+      "chunk-5PVIR7WD.js"
     ],
     "route": "/treasurer-about"
   },
   {
     "renderMode": 1,
     "preload": [
-      "chunk-SO7QVN7S.js",
-      "chunk-JIOEO4KX.js"
+      "chunk-ULQCVWNG.js",
+      "chunk-5PVIR7WD.js"
     ],
     "route": "/treasurer-contact"
   }
 ],
   entryPointToBrowserMapping: undefined,
   assets: {
-    'index.csr.html': {size: 856, hash: '352a555bc8bcd07829358f1f75cebc12b7036f339deb71974b1c586e2434f88f', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
-    'index.server.html': {size: 1258, hash: '8c995afc9ed67c103f1d060c0669644e4f7fee157a95ad7b72f44f41da28f5d9', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
+    'index.csr.html': {size: 856, hash: 'b02c05924d6e6667ed29b86ecf2b7a17777289f1e5b9f9310de475a97f4077f1', text: () => import('./assets-chunks/index_csr_html.mjs').then(m => m.default)},
+    'index.server.html': {size: 1258, hash: '9ffb78127f34a964d5c8e89f09f1432d88eec8e8bfe3e5169ad26b16272427d5', text: () => import('./assets-chunks/index_server_html.mjs').then(m => m.default)},
     'styles-NNREUR7T.css': {size: 4951, hash: '8v2xHj7cJAU', text: () => import('./assets-chunks/styles-NNREUR7T_css.mjs').then(m => m.default)}
   },
 };

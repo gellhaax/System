@@ -1,5 +1,5 @@
 .about-page {
-  background: #f0fdf4;
+  background: #fdf2f8;
   padding: 60px 40px;
   font-family: 'Segoe UI', sans-serif;
 }
@@ -14,7 +14,7 @@
 }
 
 .hero-text h5 {
-  color: #10b981;
+  color: #ec4899;
   letter-spacing: 2px;
   margin-bottom: 10px;
   font-size: 13px;
@@ -25,7 +25,7 @@
 .hero-text h1 {
   font-size: 48px;
   margin-bottom: 15px;
-  color: #065f46;
+  color: #1e1b4b;
   font-weight: 800;
 }
 
@@ -52,14 +52,14 @@
   background: white;
   padding: 28px;
   border-radius: 16px;
-  box-shadow: 0 6px 20px rgba(6, 95, 70, 0.08);
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.08);
   transition: 0.3s;
-  border-top: 3px solid #10b981;
+  border-top: 3px solid #ec4899;
 }
 
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 12px 30px rgba(6, 95, 70, 0.15);
+  box-shadow: 0 12px 30px rgba(236, 72, 153, 0.15);
 }
 
 .icon {
@@ -69,7 +69,7 @@
 
 .feature-card h3 {
   margin: 10px 0 6px;
-  color: #065f46;
+  color: #1e1b4b;
   font-size: 16px;
   font-weight: 700;
 }
@@ -87,7 +87,7 @@
 .team-section h2 {
   font-size: 30px;
   margin-bottom: 32px;
-  color: #065f46;
+  color: #1e1b4b;
   font-weight: 700;
 }
 
@@ -103,15 +103,15 @@
   border-radius: 20px;
   padding: 32px 24px;
   width: 230px;
-  box-shadow: 0 8px 24px rgba(6, 95, 70, 0.1);
+  box-shadow: 0 8px 24px rgba(236, 72, 153, 0.1);
   cursor: pointer;
   transition: 0.3s;
-  border-bottom: 3px solid #10b981;
+  border-bottom: 3px solid #ec4899;
 }
 
 .dev-card:hover {
   transform: translateY(-10px);
-  box-shadow: 0 16px 40px rgba(6, 95, 70, 0.2);
+  box-shadow: 0 16px 40px rgba(236, 72, 153, 0.2);
 }
 
 .dev-card img {
@@ -120,12 +120,12 @@
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 16px;
-  border: 3px solid #10b981;
+  border: 3px solid #ec4899;
 }
 
 .dev-card h3 {
   font-size: 17px;
-  color: #065f46;
+  color: #1e1b4b;
   margin-bottom: 6px;
   font-weight: 700;
 }

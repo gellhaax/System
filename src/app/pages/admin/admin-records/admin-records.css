@@ -1,7 +1,7 @@
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background: #f0f4f8;
+  background: #fdf2f8;
   font-family: 'Segoe UI', sans-serif;
 }
 
@@ -17,13 +17,13 @@
 
 .admin-topbar h1 {
   font-size: 28px;
-  color: #0a1628;
+  color: #1e1b4b;
   margin: 0;
   font-weight: 700;
 }
 
 .admin-topbar p {
-  color: #64748b;
+  color: #7e22ce;
   margin: 4px 0 0 0;
   font-size: 14px;
 }
@@ -37,14 +37,14 @@
   max-width: 400px;
   padding: 10px 16px;
   border-radius: 10px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #fbcfe8;
   font-size: 14px;
   outline: none;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
 .admin-search-bar input:focus {
-  border-color: #2196f3;
+  border-color: #a855f7;
 }
 
 .admin-card {
@@ -62,8 +62,8 @@
 }
 
 .admin-table th {
-  background: #f1f5f9;
-  color: #0a1628;
+  background: #fbcfe8;
+  color: #1e1b4b;
   padding: 12px 16px;
   text-align: left;
   font-weight: 600;
@@ -74,16 +74,16 @@
 
 .admin-table td {
   padding: 12px 16px;
-  border-bottom: 1px solid #f1f5f9;
-  color: #334155;
+  border-bottom: 1px solid #fbcfe8;
+  color: #1e1b4b;
 }
 
 .admin-table tr:hover td {
-  background: #f8fafc;
+  background: #fdf2f8;
 }
 
-.paid-val { color: #4caf50; font-weight: 600; }
-.balance-val { color: #ff9800; font-weight: 600; }
+.paid-val { color: #9333ea; font-weight: 600; }
+.balance-val { color: #c026d3; font-weight: 600; }
 
 .actions {
   display: flex;
@@ -91,8 +91,8 @@
 }
 
 .view-btn {
-  background: #e3f2fd;
-  color: #1565c0;
+  background: #fdf2f8;
+  color: #ec4899;
   border: none;
   padding: 6px 12px;
   border-radius: 8px;
@@ -103,7 +103,7 @@
 }
 
 .view-btn:hover {
-  background: #1565c0;
+  background: #ec4899;
   color: white;
 }
 
@@ -126,7 +126,7 @@
 
 .admin-empty {
   text-align: center;
-  color: #94a3b8;
+  color: #c084fc;
   padding: 40px;
   font-size: 14px;
 }
@@ -138,8 +138,8 @@
   font-weight: bold;
 }
 
-.admin-badge.paid { background: #e8f5e9; color: #4caf50; }
-.admin-badge.partial { background: #fff3e0; color: #ff9800; }
+.admin-badge.paid { background: #f3e8ff; color: #9333ea; }
+.admin-badge.partial { background: #fae8ff; color: #c026d3; }
 
 /* MODAL */
 .admin-modal-overlay {
@@ -171,26 +171,26 @@
 
 .modal-header h3 {
   margin: 0;
-  color: #0a1628;
+  color: #1e1b4b;
   font-size: 18px;
 }
 
 .close-btn {
-  background: #f1f5f9;
+  background: #fbcfe8;
   border: none;
   border-radius: 8px;
   padding: 6px 12px;
   cursor: pointer;
   font-size: 16px;
-  color: #64748b;
+  color: #7e22ce;
 }
 
 .close-btn:hover {
-  background: #e2e8f0;
+  background: #fbcfe8;
 }
 
 .modal-info {
-  background: #f8fafc;
+  background: #fdf2f8;
   border-radius: 12px;
   padding: 16px;
   margin-bottom: 20px;
@@ -198,7 +198,7 @@
 
 .modal-info p {
   margin: 6px 0;
-  color: #334155;
+  color: #1e1b4b;
   font-size: 14px;
 }
 
@@ -209,12 +209,12 @@
 }
 
 h4 {
-  color: #0a1628;
+  color: #1e1b4b;
   margin-bottom: 12px;
 }
 .admin-records-page {
   padding: 20px;
-  background: #f1f5f9;
+  background: #fbcfe8;
   min-height: 100vh;
 }
 
@@ -230,7 +230,7 @@ h4 {
 .earnings-summary h2 {
   margin: 0 0 20px 0;
   font-size: 20px;
-  color: #1e293b;
+  color: #1e1b4b;
   font-weight: 700;
 }
 
@@ -245,7 +245,7 @@ h4 {
   align-items: center;
   gap: 16px;
   padding: 20px;
-  background: #f8fafc;
+  background: #fdf2f8;
   border-radius: 10px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -253,7 +253,7 @@ h4 {
 .earning-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  background: #f1f5f9;
+  background: #fbcfe8;
 }
 
 .earning-icon {
@@ -271,7 +271,7 @@ h4 {
 .earning-info h3 {
   margin: 0 0 4px 0;
   font-size: 14px;
-  color: #64748b;
+  color: #7e22ce;
   font-weight: 600;
 }
 
@@ -279,12 +279,12 @@ h4 {
   margin: 0 0 4px 0;
   font-size: 24px;
   font-weight: 700;
-  color: #0f172a;
+  color: #1e1b4b;
 }
 
 .earning-info .date {
   font-size: 13px;
-  color: #94a3b8;
+  color: #c084fc;
 }
 
 /* SEARCH & RECORDS STYLES */
@@ -296,7 +296,7 @@ h4 {
   width: 100%;
   max-width: 400px;
   padding: 12px 16px;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #fbcfe8;
   border-radius: 8px;
   font-size: 14px;
   background: white;
@@ -321,28 +321,28 @@ h4 {
 }
 
 .records-table thead {
-  background: #f8fafc;
+  background: #fdf2f8;
 }
 
 .records-table th {
   padding: 14px 16px;
   text-align: left;
   font-weight: 600;
-  color: #475569;
+  color: #7e22ce;
   font-size: 13px;
   text-transform: uppercase;
-  border-bottom: 2px solid #e2e8f0;
+  border-bottom: 2px solid #fbcfe8;
 }
 
 .records-table td {
   padding: 14px 16px;
-  border-bottom: 1px solid #f1f5f9;
-  color: #475569;
+  border-bottom: 1px solid #fbcfe8;
+  color: #7e22ce;
   font-size: 14px;
 }
 
 .records-table tbody tr:hover {
-  background: #f8fafc;
+  background: #fdf2f8;
 }
 
 .actions {
@@ -361,8 +361,8 @@ h4 {
 }
 
 .btn-view {
-  background: #dbeafe;
-  color: #1e40af;
+  background: #fae8ff;
+  color: #7e22ce;
 }
 
 .btn-view:hover {
@@ -403,16 +403,16 @@ h4 {
 
 .modal-content h2 {
   margin: 0 0 20px 0;
-  color: #1e293b;
+  color: #1e1b4b;
 }
 
 .student-details p {
   margin: 10px 0;
-  color: #475569;
+  color: #7e22ce;
 }
 
 .student-details strong {
-  color: #1e293b;
+  color: #1e1b4b;
 }
 
 .btn-close {
@@ -428,13 +428,13 @@ h4 {
 }
 
 .btn-close:hover {
-  background: #2563eb;
+  background: #a855f7;
 }
 /* Add at the bottom of your CSS file */
 
 .subtitle {
   margin: -15px 0 20px 0;
-  color: #64748b;
+  color: #7e22ce;
   font-size: 14px;
 }
 
@@ -448,7 +448,7 @@ h4 {
 .earning-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 20px rgba(0,0,0,0.12);
-  border-color: #e2e8f0;
+  border-color: #fbcfe8;
 }
 
 .earning-card.active {
@@ -471,13 +471,13 @@ h4 {
 .filter-indicator {
   margin-top: 20px;
   padding: 12px 16px;
-  background: #f0fdf4;
+  background: #fdf2f8;
   border: 1px solid #86efac;
   border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #166534;
+  color: #9333ea;
   font-size: 14px;
 }
 
@@ -488,7 +488,7 @@ h4 {
 .btn-clear-filter {
   padding: 6px 12px;
   background: #dcfce7;
-  color: #166534;
+  color: #9333ea;
   border: 1px solid #86efac;
   border-radius: 6px;
   font-size: 13px;

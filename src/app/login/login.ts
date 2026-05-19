@@ -12,7 +12,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./login.css'],
 })
 export class Login implements OnInit {
-  constructor(private router: Router, private http: HttpClient) {}
+  constructor(private router: Router, private http: HttpClient) { }
 
   // ── UI STATE ─────────────────────────────────────────────────
   showLoginSection = true;
@@ -32,6 +32,7 @@ export class Login implements OnInit {
 
   // ── REGISTER FIELDS ──────────────────────────────────────────
   regFirstName = '';
+  regMiddleName = '';
   regLastName = '';
   regEmail = '';
   regContact = '';
@@ -202,6 +203,7 @@ export class Login implements OnInit {
 
     const userData = {
       first_name: this.regFirstName,
+      middle_name: this.regMiddleName,
       last_name: this.regLastName,
       email: this.regEmail,
       contact: this.regContact,
@@ -234,6 +236,7 @@ export class Login implements OnInit {
   resetRegisterForm() {
     this.submitted = false;
     this.regFirstName = '';
+    this.regMiddleName = '';
     this.regLastName = '';
     this.regEmail = '';
     this.regContact = '';
