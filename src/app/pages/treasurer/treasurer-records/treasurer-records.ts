@@ -62,15 +62,23 @@ export class Records implements OnInit, OnDestroy {
   loadRecords() {
     this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
       next: (data) => {
-        this.records = [...data];
+        this.records = this.sortRecords([...data]);
         this.cdr.detectChanges();
       },
       error: (err) => console.error('Error loading records:', err)
     });
   }
 
+  sortRecords(data: any[]) {
+    return data.sort((a, b) => {
+      const idA = a.studentId ? a.studentId.toString() : '';
+      const idB = b.studentId ? b.studentId.toString() : '';
+      return idA.localeCompare(idB, undefined, { numeric: true });
+    });
+  }
+
   getEmptyRecord() {
-    return { studentId: '', firstName: '', middleName: '', lastName: '', course: '', year: '', fee: '', amount: 0, method: '', balance: 0, status: '', date: '', receipt: '' };
+    return { studentId: '', studentIdSuffix: '', firstName: '', middleName: '', lastName: '', course: '', year: '', fee: '', amount: 0, method: '', balance: 0, status: '', date: '', receipt: '' };
   }
 
   getEmptyTransaction() {
@@ -211,7 +219,7 @@ export class Records implements OnInit, OnDestroy {
         this.closeTransactionForm();
         this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
           next: (data) => {
-            this.records = [...data];
+            this.records = this.sortRecords([...data]);
             this.searchStudent();
             this.cdr.detectChanges();
           }
@@ -223,7 +231,12 @@ export class Records implements OnInit, OnDestroy {
 
   // ✅ FIXED: addRecord now correctly saves the first transaction using the user‑entered studentId
   addRecord() {
-    if (!this.newRecord.studentId?.trim()) { alert("Student ID is required!"); return; }
+    if (!this.newRecord.studentIdSuffix?.trim() || this.newRecord.studentIdSuffix.length !== 3) { 
+      alert("Please enter exactly 3 digits for the Student ID!"); 
+      return; 
+    }
+    this.newRecord.studentId = '2024300' + this.newRecord.studentIdSuffix;
+
     if (!this.newRecord.firstName?.trim()) { alert("First Name is required!"); return; }
     if (!this.newRecord.lastName?.trim()) { alert("Last Name is required!"); return; }
     if (!this.newRecord.course) { alert("Course is required!"); return; }
@@ -232,6 +245,23 @@ export class Records implements OnInit, OnDestroy {
     if (!this.newRecord.amount) { alert("Amount is required!"); return; }
     if (!this.newRecord.method) { alert("Payment Method is required!"); return; }
     if (!this.newRecord.date) { alert("Date is required!"); return; }
+
+    // Duplicate Validation Checks
+    const isDuplicateId = this.records.some(r => r.studentId === this.newRecord.studentId);
+    if (isDuplicateId) {
+      alert(`Error: Student ID ${this.newRecord.studentId} already exists!`);
+      return;
+    }
+
+    const isDuplicateName = this.records.some(r => 
+      r.firstName?.trim().toLowerCase() === this.newRecord.firstName.trim().toLowerCase() &&
+      r.lastName?.trim().toLowerCase() === this.newRecord.lastName.trim().toLowerCase() &&
+      (r.middleName || '').trim().toLowerCase() === (this.newRecord.middleName || '').trim().toLowerCase()
+    );
+    if (isDuplicateName) {
+      alert("Error: A student with this exact first, middle, and last name already exists!");
+      return;
+    }
 
     this.computeBalance(this.newRecord);
 
@@ -302,33 +332,31 @@ export class Records implements OnInit, OnDestroy {
   saveEdit() {
     if (!this.selectedRecord) { alert("No record selected for editing."); return; }
 
-    // The student object from the server has an 'id' field which is the Firestore document ID.
-    const docId = this.selectedRecord.id;
-    if (!docId) {
-      alert("Student document ID not found. Please reload and try again.");
-      return;
-    }
+    // Instead of saving directly, submit an approval request
+    alert("Please wait for admin approval.");
 
-    this.http.put<any>(`${this.apiUrl}/students/${docId}`, {
-      firstName: this.selectedRecord.firstName,
-      middleName: this.selectedRecord.middleName,
-      lastName: this.selectedRecord.lastName,
-      course: this.selectedRecord.course,
-      year: this.selectedRecord.year
+    this.http.post<any>(`${this.apiUrl}/approvals`, {
+      requestedBy: 'Treasurer',
+      studentId: this.selectedRecord.studentId,
+      studentName: `${this.selectedRecord.firstName} ${this.selectedRecord.lastName}`,
+      requestedData: {
+        type: 'student_update',
+        data: {
+          firstName: this.selectedRecord.firstName,
+          middleName: this.selectedRecord.middleName,
+          lastName: this.selectedRecord.lastName,
+          course: this.selectedRecord.course,
+          year: this.selectedRecord.year
+        }
+      },
+      originalData: this.records[this.selectedIndex]
     }).subscribe({
       next: () => {
-        alert("Student updated successfully!");
         this.selectedRecord = null;
         this.selectedIndex = -1;
-        this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
-          next: (data) => {
-            this.records = [...data];
-            this.searchStudent();
-            this.cdr.detectChanges();
-          }
-        });
+        this.cdr.detectChanges();
       },
-      error: (err) => alert(err.error?.error || "Failed to update student!")
+      error: (err) => alert(err.error?.error || "Failed to submit approval request!")
     });
   }
 
@@ -352,7 +380,7 @@ export class Records implements OnInit, OnDestroy {
         this.searchId = '';
         this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
           next: (data) => {
-            this.records = [...data];
+            this.records = this.sortRecords([...data]);
             this.cdr.detectChanges();
           }
         });
@@ -409,7 +437,7 @@ export class Records implements OnInit, OnDestroy {
         alert("Transaction deleted successfully!");
         this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
           next: (data) => {
-            this.records = [...data];
+            this.records = this.sortRecords([...data]);
             this.searchStudent();
             this.cdr.detectChanges();
           }

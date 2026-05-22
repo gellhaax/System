@@ -1,3 +1,8 @@
+/* FIX GLOBAL OVERFLOW */
+* {
+  box-sizing: border-box;
+}
+
 .page-bg {
   min-height: 100vh;
   background: #f3f6f4;
@@ -63,6 +68,7 @@
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 24px;
+  align-items: start;
 }
 
 /* CARD */
@@ -70,7 +76,9 @@
   background: #fff;
   border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 6px 18px  #1e1b4b;
+  box-shadow: 0 6px 18px rgba(30, 27, 75, 0.25);
+  width: 100%;
+  overflow: hidden; /* FIX */
 }
 
 .card h3 {
@@ -102,31 +110,41 @@
   font-size: 14px;
 }
 
-/* INPUTS */
+/* FIXED INPUTS */
 input {
   width: 100%;
-  padding: 10px;
+  max-width: 100%;
+  padding: 12px 14px;
   margin-top: 8px;
-  border-radius: 8px;
+  margin-bottom: 10px;
+  border-radius: 10px;
   border: 1px solid #fce7f3;
   outline: none;
+  box-sizing: border-box; /* MAIN FIX */
+  transition: 0.3s ease;
 }
 
 input:focus {
   border-color: #ec4899;
+  box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.12);
 }
 
 /* BUTTON */
 .primary-btn {
   width: 100%;
   margin-top: 12px;
-  padding: 10px;
+  padding: 12px;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   background: #ec4899;
   color: white;
   cursor: pointer;
   font-weight: 600;
+  transition: 0.3s ease;
+}
+
+.primary-btn:hover {
+  transform: translateY(-1px);
 }
 
 /* RIGHT SIDE STACK */
@@ -134,6 +152,7 @@ input:focus {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  min-width: 0;
 }
 
 /* PROFILE */
@@ -155,4 +174,21 @@ input:focus {
   font-size: 13px;
   color: #ec4899;
   margin-top: 8px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .actions {
+    width: 100%;
+    flex-wrap: wrap;
+  }
 }

@@ -190,8 +190,12 @@
 
           <h3>Add Student</h3>
 
-          <input placeholder="Student ID" [(ngModel)]="newRecord.studentId" maxlength="10"
-            (input)="newRecord.studentId=newRecord.studentId.replace(/[^0-9]/g,'')">
+          <label>Student ID</label>
+          <div class="fixed-prefix-input">
+            <span class="prefix">2024300</span>
+            <input placeholder="XXX" [(ngModel)]="newRecord.studentIdSuffix" maxlength="3"
+              (input)="newRecord.studentIdSuffix=newRecord.studentIdSuffix.replace(/[^0-9]/g,'')">
+          </div>
 
           <input placeholder="First Name" [(ngModel)]="newRecord.firstName"
             (input)="newRecord.firstName=newRecord.firstName.replace(/[^A-Za-z\s]/g,'')">

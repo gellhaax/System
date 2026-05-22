@@ -11,12 +11,61 @@
       <li><a routerLink="/treasurer-settings" routerLinkActive="active">Settings</a></li>
       <li><a routerLink="/treasurer-about" routerLinkActive="active">About</a></li>
       <li><a routerLink="/treasurer-contact" routerLinkActive="active">Contact</a></li>
-      <li class="role">
-        <img *ngIf="profileImage" [src]="profileImage" class="nav-avatar" />
+      <li class="nav-actions">
+        <!-- Notification Bell -->
+        <div class="notification-bell-container" (click)="toggleDropdown($event)">
+          <div class="bell-icon">
+            🔔
+            <span class="badge" *ngIf="unreadCount > 0">{{ unreadCount }}</span>
+          </div>
+          
+          <!-- Dropdown Panel -->
+          <div class="notification-dropdown" *ngIf="showDropdown" (click)="$event.stopPropagation()">
+            <div class="dropdown-header">
+              <h4>Notifications</h4>
+              <button class="mark-all-btn" *ngIf="unreadCount > 0" (click)="markAllAsRead($event)">Mark all as read</button>
+            </div>
+            
+            <div class="dropdown-list">
+              <div class="empty-dropdown" *ngIf="notifications.length === 0">
+                <p>No notifications yet</p>
+              </div>
+              
+              <div class="dropdown-item" *ngFor="let notif of notifications" [class.unread]="!notif.isRead">
+                <div class="dropdown-icon" [ngClass]="{'approved': notif.message.includes('APPROVED'), 'rejected': notif.message.includes('REJECTED'), 'pending': notif.message.includes('pending')}">
+                  <span *ngIf="notif.message.includes('APPROVED')">✓</span>
+                  <span *ngIf="notif.message.includes('REJECTED')">✕</span>
+                  <span *ngIf="!notif.message.includes('APPROVED') && !notif.message.includes('REJECTED')">🕒</span>
+                </div>
+                <div class="dropdown-content">
+                  <div class="dropdown-title">
+                    <span *ngIf="notif.message.includes('APPROVED')">Request Approved</span>
+                    <span *ngIf="notif.message.includes('REJECTED')">Request Rejected</span>
+                    <span *ngIf="!notif.message.includes('APPROVED') && !notif.message.includes('REJECTED')">Pending Approval</span>
+                    <span class="new-dot" *ngIf="!notif.isRead"></span>
+                  </div>
+                  <p class="dropdown-message">
+                    <!-- Extract just the core message text to be clean like reference -->
+                    {{ notif.message.replace('✅ Admin APPROVED your edit request for ', 'Admin approved your request for ').replace('❌ Admin REJECTED your edit request for ', 'Admin rejected your request for ') }}
+                  </p>
+                  <span class="dropdown-time">{{ notif.timeAgo }}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="dropdown-footer">
+              <a routerLink="/treasurer-home">View all notifications &rarr;</a>
+            </div>
+          </div>
+        </div>
 
-        <span *ngIf="!profileImage">👤</span>
-
-        Treasurer
+        <!-- User Profile -->
+        <div class="role">
+          <img *ngIf="profileImage" [src]="profileImage" class="nav-avatar" />
+          <span *ngIf="!profileImage">👤</span>
+          Treasurer
+          <span class="dropdown-arrow">v</span>
+        </div>
       </li>
 
     </ul>

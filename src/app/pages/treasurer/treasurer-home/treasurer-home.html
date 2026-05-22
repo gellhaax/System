@@ -25,6 +25,60 @@
 
   </div>
   
+  <!-- RECENT NOTIFICATIONS (COMPACT) -->
+  <div class="recent-notifications-container">
+    <div class="recent-header">
+      <div class="recent-title-group">
+        <div class="header-icon">
+          🔔
+        </div>
+        <div>
+          <h2>Recent Notifications</h2>
+          <p>Stay updated with admin approvals</p>
+        </div>
+      </div>
+      <a routerLink="/treasurer-home" class="view-all-link">View All <span>&rsaquo;</span></a>
+    </div>
+
+    <div *ngIf="notifications.length === 0" class="empty-state">
+      <p>No recent notifications.</p>
+    </div>
+
+    <!-- Slice to 3 items as requested for compact view -->
+    <div class="recent-list">
+      <div class="recent-item" *ngFor="let notif of notifications | slice:0:3" [class.unread]="!notif.isRead">
+        
+        <div class="item-icon" [ngClass]="{'approved': notif.message.includes('APPROVED'), 'rejected': notif.message.includes('REJECTED')}">
+          <span *ngIf="notif.message.includes('APPROVED')">✓</span>
+          <span *ngIf="notif.message.includes('REJECTED')">✕</span>
+          <span *ngIf="!notif.message.includes('APPROVED') && !notif.message.includes('REJECTED')">🕒</span>
+        </div>
+
+        <div class="item-content">
+          <div class="item-main-text">
+            <strong>{{ notif.message.includes('APPROVED') ? 'Admin approved your request' : (notif.message.includes('REJECTED') ? 'Admin rejected your request' : 'Your request is pending') }}</strong> 
+            {{ notif.message.replace('✅ Admin APPROVED your edit request', '').replace('❌ Admin REJECTED your edit request', '') }}
+          </div>
+          <div class="item-sub-text">
+            <span *ngIf="notif.message.includes('APPROVED')">Your student information has been updated.</span>
+            <span *ngIf="notif.message.includes('REJECTED')">No changes were made to the student information.</span>
+            <span *ngIf="!notif.message.includes('APPROVED') && !notif.message.includes('REJECTED')">Please wait for admin approval.</span>
+          </div>
+        </div>
+
+        <div class="item-meta">
+          <span class="status-pill" [ngClass]="{'approved': notif.message.includes('APPROVED'), 'rejected': notif.message.includes('REJECTED')}">
+            {{ notif.message.includes('APPROVED') ? 'Approved' : (notif.message.includes('REJECTED') ? 'Rejected' : 'Pending') }}
+          </span>
+          <span class="item-time">
+            <!-- Reuse getTimeAgo logic if possible, or just use date -->
+            {{ notif.date }}
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
   <!-- BACKGROUND -->
   <div class="background"></div>

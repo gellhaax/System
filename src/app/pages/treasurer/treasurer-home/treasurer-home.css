@@ -76,230 +76,174 @@
   opacity: 0.9;
 }
 
-/* NOTIFICATION SECTION */
+/* COMPACT RECENT NOTIFICATIONS */
 
-.notification-section {
-  max-width: 1350px;
-
-  margin: 50px auto 0 auto;
-
-  background: rgba(255, 255, 255, 0.93);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  border-radius: 30px;
-
+.recent-notifications-container {
+  max-width: 1100px;
+  margin: 40px auto 0 auto;
+  background: white;
+  border-radius: 24px;
   padding: 30px;
-
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.12);
-
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 2;
 }
 
-/* HEADER */
-
-.notif-header {
-  margin-bottom: 28px;
-}
-
-.notif-title {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-
-.notif-icon {
-  width: 60px;
-  height: 60px;
-
-  border-radius: 50%;
-
-  background: #fce7f3;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 28px;
-}
-
-.notif-title h2 {
-  color: #0f172a;
-  font-size: 34px;
-  margin: 0;
-}
-
-.notif-title p {
-  margin-top: 5px;
-  color: #64748b;
-  font-size: 15px;
-}
-
-/* NOTIFICATION CARD */
-
-.notif-card {
-  background: white;
-
-  border: 1px solid #e2e8f0;
-
-  border-radius: 24px;
-
-  padding: 24px;
-
-  display: flex;
-  gap: 24px;
-
-  margin-bottom: 20px;
-
-  transition: 0.25s;
-
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.notif-card:hover {
-  transform: translateY(-4px);
-}
-
-.notif-card.read {
-  opacity: 0.7;
-}
-
-/* STATUS ICON */
-
-.status-icon {
-  width: 65px;
-  height: 65px;
-
-  border-radius: 50%;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  color: white;
-
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.status-icon.approved {
-  background: #a855f7;
-}
-
-.status-icon.declined {
-  background: #ef4444;
-}
-
-/* CONTENT */
-
-.notif-content {
-  flex: 1;
-}
-
-.notif-top {
+.recent-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  margin-bottom: 12px;
+  margin-bottom: 25px;
 }
 
-.notif-left {
+.recent-title-group {
   display: flex;
   align-items: center;
   gap: 15px;
 }
 
-.notif-left h3 {
+.header-icon {
+  width: 45px;
+  height: 45px;
+  background: #fdf2f8;
+  color: #ec4899;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.recent-title-group h2 {
+  color: #0f172a;
+  font-size: 20px;
+  font-weight: 700;
   margin: 0;
-  color: #0f172a;
-  font-size: 23px;
 }
 
-.notif-date {
+.recent-title-group p {
   color: #64748b;
-  font-size: 14px;
-}
-
-/* BADGES */
-
-.status-badge {
-  padding: 8px 15px;
-
-  border-radius: 30px;
-
   font-size: 13px;
-  font-weight: 700;
+  margin: 4px 0 0 0;
 }
 
-.approved-badge {
-  background: #dcfce7;
-  color: #166534;
+.view-all-link {
+  color: #ec4899;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  background: #fdf2f8;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.2s;
 }
 
-.declined-badge {
-  background: #fee2e2;
-  color: #991b1b;
+.view-all-link:hover {
+  background: #fce7f3;
 }
 
-/* MESSAGE */
-
-.notif-content p {
-  color: #475569;
-
+.view-all-link span {
   font-size: 16px;
-
-  line-height: 1.6;
-
-  margin-bottom: 18px;
+  margin-left: 4px;
 }
 
-/* BUTTONS */
+.recent-list {
+  display: flex;
+  flex-direction: column;
+}
 
-.notif-actions button {
-  border: none;
-
-  padding: 12px 18px;
-
+.recent-item {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.2s;
   border-radius: 12px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  transition: 0.2s;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
-.mark-read-btn {
-  background: #a855f7;
+.recent-item:last-child {
+  border-bottom: none;
+}
+
+.recent-item:hover {
+  background: #f8fafc;
+}
+
+.recent-item.unread {
+  background: #fdf2f8;
+}
+
+.item-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
   color: white;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-right: 20px;
 }
 
-.mark-read-btn:hover {
-  background: #9333ea;
+.item-icon.approved { background: #22c55e; }
+.item-icon.rejected { background: #ef4444; }
+.item-icon.pending { background: #f59e0b; color: white; }
+
+.item-content {
+  flex: 1;
 }
 
-.mark-unread-btn {
-  background: #e2e8f0;
+.item-main-text {
+  font-size: 14px;
+  color: #334155;
+  margin-bottom: 4px;
+}
+
+.item-main-text strong {
   color: #0f172a;
+  font-weight: 700;
 }
 
-.mark-unread-btn:hover {
-  background: #cbd5e1;
+.item-sub-text {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.item-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  min-width: 120px;
+}
+
+.status-pill {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.status-pill.approved { background: #dcfce7; color: #166534; }
+.status-pill.rejected { background: #fee2e2; color: #991b1b; }
+.status-pill.pending { background: #fef3c7; color: #b45309; }
+
+.item-time {
+  font-size: 11px;
+  color: #94a3b8;
 }
 
 /* EMPTY */
 
 .empty-state {
   text-align: center;
-
-  padding: 50px;
-
+  padding: 40px;
   color: #94a3b8;
-
-  font-size: 18px;
+  font-size: 15px;
 }
 
 /* BACKGROUND */
@@ -340,53 +284,22 @@
     width: 100%;
   }
 
-  .notification-section {
+  .recent-notifications-container {
     margin: 30px 20px;
+    padding: 20px;
   }
 
-  .notif-card {
-    flex-direction: column;
-  }
-
-  .notif-top {
+  .recent-item {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
 
-  .notif-left {
-    flex-wrap: wrap;
+  .item-meta {
+    align-items: flex-start;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
   }
-
-  /* ACTION BUTTONS */
-
-  .notif-actions {
-    display: flex;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-
-  .delete-btn {
-    border: none;
-
-    padding: 12px 18px;
-
-    border-radius: 12px;
-
-    background: #fee2e2;
-    color: #dc2626;
-
-    font-weight: 700;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-  }
-
-  .delete-btn:hover {
-    background: #dc2626;
-    color: white;
-  }
-
 
 }

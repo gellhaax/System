@@ -62,7 +62,7 @@ export class AdminRecords implements OnInit {
       .subscribe({
         next: (data) => {
           console.log('API DATA:', data);
-          this.records = data || [];
+          this.records = this.sortRecords(data || []);
           this.displayedRecords = [...this.records];
           this.cdr.detectChanges();
         },
@@ -70,6 +70,15 @@ export class AdminRecords implements OnInit {
           console.error('ERROR LOADING RECORDS:', err);
         }
       });
+  }
+
+  // ✅ Sort Records by Student ID
+  sortRecords(data: any[]) {
+    return data.sort((a, b) => {
+      const idA = a.studentId ? a.studentId.toString() : '';
+      const idB = b.studentId ? b.studentId.toString() : '';
+      return idA.localeCompare(idB, undefined, { numeric: true });
+    });
   }
 
   // ✅ Calculate Daily/Weekly/Monthly/All-Time Earnings
@@ -199,8 +208,15 @@ export class AdminRecords implements OnInit {
 
     if (!confirmDelete) return;
 
+    // Look up the server-returned student object to get the Firestore document ID
+    const student = this.records.find(r => r.studentId === studentId);
+    if (!student || !student.id) {
+      alert("Could not find the record's document ID. Please reload the page.");
+      return;
+    }
+
     this.http
-      .delete<any>(`${this.apiUrl}/students/${studentId}`)
+      .delete<any>(`${this.apiUrl}/students/${student.id}`)
       .subscribe({
         next: () => {
           alert('Student record deleted successfully!');
@@ -214,6 +230,38 @@ export class AdminRecords implements OnInit {
           alert(err.error?.error || 'Failed to delete student!');
         }
       });
+  }
+
+  // ✅ Clear History (Deletes all transactions for a student)
+  clearHistory(studentId: string) {
+    const confirmClear = confirm("Are you sure you want to clear this student's payment history?");
+    if (!confirmClear) return;
+
+    const student = this.records.find(r => r.studentId === studentId);
+    if (!student || !student.transactions || student.transactions.length === 0) {
+      alert("This student has no payment history to clear.");
+      return;
+    }
+
+    let deletedCount = 0;
+    const total = student.transactions.length;
+
+    student.transactions.forEach((t: any) => {
+      if (t.id) {
+        this.http.delete<any>(`${this.apiUrl}/transactions/${t.id}`).subscribe({
+          next: () => {
+            deletedCount++;
+            if (deletedCount === total) {
+              alert('Payment history cleared successfully!');
+              this.loadRecords();
+              this.calculateEarnings();
+              this.filterByPeriod(this.selectedPeriod);
+            }
+          },
+          error: (err) => console.error('Failed to delete transaction:', err)
+        });
+      }
+    });
   }
 
   getTotalPaid(student: any): number {

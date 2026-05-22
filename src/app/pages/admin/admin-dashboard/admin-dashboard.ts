@@ -326,22 +326,35 @@ export class AdminDashboard implements OnInit, OnDestroy {
     const payments: any[] = [];
 
     this.records.forEach(student => {
-
       (student.transactions || []).forEach((t: any) => {
-
         payments.push({
           name: `${student.firstName} ${student.lastName}`,
           course: `${student.course} - ${student.year}`,
           amount: t.amount,
           status: this.getStudentStatus(student),
-          date: t.date
+          date: t.date,
+          created_at: t.created_at
         });
-
       });
-
     });
 
-    return payments.reverse().slice(0, 5);
+    // Sort chronologically (newest first)
+    payments.sort((a, b) => {
+      let timeA = new Date(a.date).getTime();
+      let timeB = new Date(b.date).getTime();
+
+      // Prioritize exact database server timestamp if available
+      if (a.created_at && a.created_at._seconds) {
+        timeA = a.created_at._seconds * 1000;
+      }
+      if (b.created_at && b.created_at._seconds) {
+        timeB = b.created_at._seconds * 1000;
+      }
+
+      return timeB - timeA;
+    });
+
+    return payments.slice(0, 5);
   }
 
   get weeklyTotal(): number {

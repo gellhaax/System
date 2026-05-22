@@ -323,8 +323,9 @@ app.delete("/api/students/:id", async (req, res) => {
     }
 
     // Delete all transactions for this student
+    const actualStudentId = sData ? sData.studentId : id;
     const transactionsSnapshot = await getTransactionsCollection()
-      .where('studentId', '==', id) // 使用 id 而不是 req.body.studentId
+      .where('studentId', '==', actualStudentId)
       .get();
 
     const batch = firestore.batch();
@@ -455,6 +456,9 @@ app.get("/api/approvals/pending", async (req, res) => {
     approvalsSnapshot.forEach(doc => {
       const approvalData = doc.data();
       approvalData.id = doc.id;
+      if (approvalData.created_at && typeof approvalData.created_at.toDate === 'function') {
+        approvalData.created_at = approvalData.created_at.toDate().toISOString();
+      }
       approvals.push(approvalData);
     });
 
@@ -497,6 +501,13 @@ app.put("/api/approvals/:id", async (req, res) => {
         if (!studentSnapshot.empty) {
           const studentDoc = studentSnapshot.docs[0];
           await studentDoc.ref.update(approvalData.requestedData.data);
+
+          // ✅ MIRROR TO MYSQL
+          const { firstName, middleName, lastName, course, year } = approvalData.requestedData.data;
+          await mysqlQuery(
+            'UPDATE students SET first_name = ?, middle_name = ?, last_name = ?, course = ?, year = ? WHERE student_id = ?',
+            [firstName, middleName || '', lastName, course, year, approvalData.studentId]
+          );
         }
       }
     }
@@ -514,17 +525,30 @@ app.get("/api/notifications", async (req, res) => {
     const { role } = req.query;
     let query = getNotificationsCollection();
 
-    if (role) {
-      query = query.where('recipientRole', '==', role);
-    }
-
-    const notificationsSnapshot = await query.orderBy('created_at', 'desc').get();
+    const notificationsSnapshot = await getNotificationsCollection().get();
     
-    const notifications = [];
+    let notifications = [];
     notificationsSnapshot.forEach(doc => {
       const notificationData = doc.data();
       notificationData.id = doc.id;
+      
+      // Store original for sorting, but replace for JSON serialization
+      notificationData._sortTime = notificationData.created_at ? 
+        (typeof notificationData.created_at.toMillis === 'function' ? notificationData.created_at.toMillis() : new Date(notificationData.created_at).getTime()) : 0;
+        
+      if (notificationData.created_at && typeof notificationData.created_at.toDate === 'function') {
+        notificationData.created_at = notificationData.created_at.toDate().toISOString();
+      }
       notifications.push(notificationData);
+    });
+
+    if (role) {
+      notifications = notifications.filter(n => n.recipientRole === role);
+    }
+
+    // Sort in memory by _sortTime desc
+    notifications.sort((a, b) => {
+      return b._sortTime - a._sortTime;
     });
 
     res.json(notifications);
@@ -555,6 +579,29 @@ app.post("/api/notifications", async (req, res) => {
     res.json({ message: "Notification created successfully!", id: notificationRef.id });
   } catch (error) {
     console.error('Error creating notification:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.delete("/api/notifications/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    await getNotificationsCollection().doc(id).delete();
+    res.json({ message: "Notification deleted successfully!" });
+  } catch (error) {
+    console.error('Error deleting notification:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.put("/api/notifications/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const body = req.body || {};
+    await getNotificationsCollection().doc(id).update({ isRead: body.isRead });
+    res.json({ message: "Notification updated successfully!" });
+  } catch (error) {
+    console.error('Error updating notification:', error);
     res.status(500).json({ error: error.message });
   }
 });
