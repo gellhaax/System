@@ -15,17 +15,17 @@
       <!-- LEFT -->
       <div class="left-buttons">
         <button class="archive-btn" (click)="archiveSelected()">
-          📦 Archive
+           Archive
         </button>
         <button class="delete-btn" (click)="deleteSelected()">
-          🗑 Delete
+          Delete
         </button>
       </div>
 
       <!-- RIGHT -->
       <div class="right-buttons">
         <button class="approve-btn" (click)="approveSelected()">
-           Approve
+          Approve
         </button>
         <button class="decline-btn" (click)="declineSelected()">
           Decline
@@ -37,11 +37,7 @@
     <!-- SELECT ALL -->
     <div class="select-all-card">
       <label>
-        <input
-          type="checkbox"
-          [checked]="isAllSelected()"
-          (change)="toggleSelectAll($event)"
-        />
+        <input type="checkbox" [checked]="isAllSelected()" (change)="toggleSelectAll($event)" />
         Select All ({{ totalRequests }} pending)
       </label>
     </div>
@@ -63,54 +59,86 @@
         <div class="request-content">
 
           <div class="request-header">
-            <h3>Edit Request from Treasurer</h3>
+            <h3 *ngIf="request.requestedData?.type === 'student_update'">Edit Request from Treasurer</h3>
+            <h3 *ngIf="request.requestedData?.type === 'transaction_delete'">Delete Transaction Request</h3>
+            <h3 *ngIf="request.requestedData?.type === 'student_delete'">Delete Student Request</h3>
             <span class="request-date">📅 {{ request.date }}</span>
           </div>
 
-          <p class="request-message">
+          <p class="request-message" *ngIf="request.requestedData?.type === 'student_update'">
             Treasurer <strong>{{ request.requestedBy }}</strong>
             requested changes for student
             <strong>{{ request.studentName }}</strong>
             ({{ request.studentId }}).
           </p>
 
-          <!-- ✅ FIXED: was request.data — now request.requestedData -->
-          <div class="details-grid" *ngIf="request.requestedData?.data">
+          <p class="request-message" *ngIf="request.requestedData?.type === 'transaction_delete'">
+            Treasurer <strong>{{ request.requestedBy }}</strong>
+            requested to delete a transaction for student
+            <strong>{{ request.studentName }}</strong>
+            ({{ request.studentId }}).
+          </p>
 
+          <p class="request-message" *ngIf="request.requestedData?.type === 'student_delete'">
+            Treasurer <strong>{{ request.requestedBy }}</strong>
+            requested to delete student record
+            <strong>{{ request.studentName }}</strong>
+            ({{ request.studentId }}).
+          </p>
+
+          <!-- Student Update Details -->
+          <div class="details-grid" *ngIf="request.requestedData?.type === 'student_update'">
             <div>
               <span>First Name:</span>
               <strong>{{ request.requestedData.data.firstName }}</strong>
             </div>
-
             <div>
               <span>Middle Name:</span>
               <strong>{{ request.requestedData.data.middleName }}</strong>
             </div>
-
             <div>
               <span>Last Name:</span>
               <strong>{{ request.requestedData.data.lastName }}</strong>
             </div>
-
             <div>
               <span>Course:</span>
               <strong>{{ request.requestedData.data.course }}</strong>
             </div>
-
             <div>
               <span>Year:</span>
               <strong>{{ request.requestedData.data.year }}</strong>
             </div>
-
           </div>
 
-          <!-- ✅ SHOW ORIGINAL vs REQUESTED comparison -->
-          <div class="compare-note" *ngIf="request.originalData">
+          <!-- Transaction Delete Details -->
+          <div class="details-grid" *ngIf="request.requestedData?.type === 'transaction_delete'">
+            <div>
+              <span>Fee:</span>
+              <strong>{{ request.requestedData.data.fee }}</strong>
+            </div>
+            <div>
+              <span>Amount:</span>
+              <strong>{{ request.requestedData.data.amount }}</strong>
+            </div>
+            <div>
+              <span>Date:</span>
+              <strong>{{ request.requestedData.data.date }}</strong>
+            </div>
+          </div>
+
+          <!-- Student Update Compare -->
+          <div class="compare-note" *ngIf="request.requestedData?.type === 'student_update' && request.originalData">
             <small>
               Original: {{ request.originalData.firstName }}
               {{ request.originalData.lastName }} —
               {{ request.originalData.course }}
               Yr. {{ request.originalData.year }}
+            </small>
+          </div>
+
+          <div class="compare-note" *ngIf="request.requestedData?.type === 'transaction_delete' && request.originalData">
+            <small>
+              Original Amount: {{ request.originalData.amount }}
             </small>
           </div>
 
@@ -120,7 +148,7 @@
 
       <!-- EMPTY -->
       <div class="empty-box" *ngIf="requests.length === 0">
-        🔔 No pending request notifications.
+         No pending request notifications.
       </div>
 
     </div>

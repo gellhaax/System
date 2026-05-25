@@ -62,7 +62,8 @@ export class Home implements OnInit, OnDestroy {
   loadNotifications() {
     this.http.get<any[]>(`${this.apiUrl}/notifications?role=treasurer`).subscribe({
       next: (data) => {
-        this.notifications = data.map(n => ({
+        const uniqueData = data.filter((v, i, a) => a.findIndex(t => (t.message === v.message && t.created_at === v.created_at)) === i);
+        this.notifications = uniqueData.map(n => ({
           ...n,
           date: n.created_at ? new Date(n.created_at).toLocaleDateString('en-PH', {
             year: 'numeric', month: 'long', day: 'numeric',

@@ -509,6 +509,56 @@ app.put("/api/approvals/:id", async (req, res) => {
             [firstName, middleName || '', lastName, course, year, approvalData.studentId]
           );
         }
+      } else if (approvalData.requestedData && approvalData.requestedData.type === 'transaction_delete') {
+        const transId = approvalData.requestedData.data.id;
+        if (transId) {
+          await getTransactionsCollection().doc(transId).delete();
+        }
+      } else if (approvalData.requestedData && approvalData.requestedData.type === 'student_delete') {
+        let studentDocId = approvalData.requestedData.data.id;
+        let sData = null;
+
+        // Try getting by document ID first
+        if (studentDocId) {
+          const studentDoc = await getStudentsCollection().doc(studentDocId).get();
+          if (studentDoc.exists) {
+            sData = studentDoc.data();
+          }
+        }
+
+        // Fallback: If document ID fails, find by studentId
+        if (!sData && approvalData.studentId) {
+          const studentSnapshot = await getStudentsCollection()
+            .where('studentId', '==', approvalData.studentId)
+            .limit(1)
+            .get();
+
+          if (!studentSnapshot.empty) {
+            studentDocId = studentSnapshot.docs[0].id;
+            sData = studentSnapshot.docs[0].data();
+          }
+        }
+
+        if (studentDocId && sData) {
+          // Delete from Firestore
+          await getStudentsCollection().doc(studentDocId).delete();
+
+          if (sData.studentId) {
+            // Delete from MySQL (both students and transactions)
+            await mysqlQuery('DELETE FROM transactions WHERE student_id = ?', [sData.studentId]);
+            await mysqlQuery('DELETE FROM students WHERE student_id = ?', [sData.studentId]);
+
+            // Delete transactions from Firestore
+            const transactionsSnapshot = await getTransactionsCollection()
+              .where('studentId', '==', sData.studentId)
+              .get();
+            const batch = firestore.batch();
+            transactionsSnapshot.forEach(doc => {
+              batch.delete(doc.ref);
+            });
+            await batch.commit();
+          }
+        }
       }
     }
 

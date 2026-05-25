@@ -12,7 +12,7 @@
       </div>
     </div>
 
-    <!-- ✅ EARNINGS SUMMARY SECTION (CLICKABLE) -->
+    <!-- EARNINGS SUMMARY SECTION (CLICKABLE) -->
     <div class="earnings-summary">
       <h2>📊 Payment Overview</h2>
       <p class="subtitle">Click on a period to filter records</p>
@@ -71,7 +71,7 @@
 
       <!-- Active Filter Indicator -->
       <div class="filter-indicator" *ngIf="selectedPeriod !== 'all'">
-        <span>🔍 Showing records for:
+        <span>Showing records for:
           <strong>{{ selectedPeriod === 'daily' ? 'Today' : selectedPeriod === 'weekly' ? 'This Week' : 'This Month' }}</strong>
         </span>
         <button class="btn-clear-filter" (click)="filterByPeriod('all')">Clear Filter</button>
@@ -170,7 +170,7 @@
 
         <div class="modal-header">
 
-          <h3>👤 Student Details</h3>
+          <h3>Student Details</h3>
 
           <button
             class="close-btn"

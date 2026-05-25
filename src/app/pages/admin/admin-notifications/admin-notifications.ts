@@ -50,9 +50,10 @@ export class AdminNotifications implements OnInit, OnDestroy {
   loadRequests() {
     this.http.get<any[]>(`${this.apiUrl}/approvals/pending`).subscribe({
       next: (data) => {
+        const prevSelected = new Set(this.requests.filter(r => r.selected).map(r => r.id));
         this.requests = data.map(r => ({
           ...r,
-          selected: false,
+          selected: prevSelected.has(r.id),
           requestedData: typeof r.requestedData === 'string' ? JSON.parse(r.requestedData) : r.requestedData,
           originalData: typeof r.originalData === 'string' ? JSON.parse(r.originalData) : r.originalData,
           data: typeof r.requestedData === 'string' ? JSON.parse(r.requestedData) : r.requestedData,
@@ -109,9 +110,12 @@ export class AdminNotifications implements OnInit, OnDestroy {
 
   saveTreasurerNotification(status: 'approved' | 'rejected', selected: any[]) {
     selected.forEach(r => {
+      const typeStr = r.requestedData?.type === 'transaction_delete' ? 'transaction delete' :
+                      r.requestedData?.type === 'student_delete' ? 'student delete' : 'edit';
+                      
       const message = status === 'approved'
-        ? `✅ Admin APPROVED your edit request for student ${r.studentName} (${r.studentId})`
-        : `❌ Admin REJECTED your edit request for student ${r.studentName} (${r.studentId})`;
+        ? `✅ Admin APPROVED your ${typeStr} request for student ${r.studentName} (${r.studentId})`
+        : `❌ Admin REJECTED your ${typeStr} request for student ${r.studentName} (${r.studentId})`;
 
       this.http.post(`${this.apiUrl}/notifications`, {
         recipientRole: 'treasurer',

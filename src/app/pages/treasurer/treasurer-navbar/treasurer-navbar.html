@@ -31,7 +31,7 @@
                 <p>No notifications yet</p>
               </div>
               
-              <div class="dropdown-item" *ngFor="let notif of notifications" [class.unread]="!notif.isRead">
+              <div class="dropdown-item" *ngFor="let notif of (showAllNotifs ? notifications : (notifications | slice:0:3))" [class.unread]="!notif.isRead">
                 <div class="dropdown-icon" [ngClass]="{'approved': notif.message.includes('APPROVED'), 'rejected': notif.message.includes('REJECTED'), 'pending': notif.message.includes('pending')}">
                   <span *ngIf="notif.message.includes('APPROVED')">✓</span>
                   <span *ngIf="notif.message.includes('REJECTED')">✕</span>
@@ -53,8 +53,8 @@
               </div>
             </div>
             
-            <div class="dropdown-footer">
-              <a routerLink="/treasurer-home">View all notifications &rarr;</a>
+            <div class="dropdown-footer" *ngIf="!showAllNotifs && notifications.length > 3">
+              <a (click)="showPreviousNotifications($event)" style="cursor: pointer;">View all notifications &rarr;</a>
             </div>
           </div>
         </div>
@@ -64,7 +64,7 @@
           <img *ngIf="profileImage" [src]="profileImage" class="nav-avatar" />
           <span *ngIf="!profileImage">👤</span>
           Treasurer
-          <span class="dropdown-arrow">v</span>
+         
         </div>
       </li>
 

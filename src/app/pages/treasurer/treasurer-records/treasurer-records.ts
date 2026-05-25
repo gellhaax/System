@@ -143,7 +143,11 @@ export class Records implements OnInit, OnDestroy {
 
   onFileSelected(event: any, target: any) {
     const file = event.target.files[0];
-    if (!file) return;
+    if (!file) {
+      target.selectedFile = null;
+      target.receiptPreview = null;
+      return;
+    }
     target.selectedFile = file;
     const reader = new FileReader();
     reader.onload = () => {
@@ -189,6 +193,7 @@ export class Records implements OnInit, OnDestroy {
     if (!this.newTransaction.amount) { alert("Amount is required!"); return; }
     if (!this.newTransaction.method) { alert("Payment Method is required!"); return; }
     if (!this.newTransaction.date) { alert("Date is required!"); return; }
+    if (!this.newTransaction.selectedFile) { alert("Please attach the receipt payment"); return; }
 
     const remainingBalance = this.getRemainingForFee(student.studentId, this.newTransaction.fee);
     if (Number(this.newTransaction.amount) > remainingBalance) {
@@ -229,11 +234,11 @@ export class Records implements OnInit, OnDestroy {
     });
   }
 
-  // ✅ FIXED: addRecord now correctly saves the first transaction using the user‑entered studentId
+  //addRecord now correctly saves the first transaction using the user‑entered studentId
   addRecord() {
-    if (!this.newRecord.studentIdSuffix?.trim() || this.newRecord.studentIdSuffix.length !== 3) { 
-      alert("Please enter exactly 3 digits for the Student ID!"); 
-      return; 
+    if (!this.newRecord.studentIdSuffix?.trim() || this.newRecord.studentIdSuffix.length !== 3) {
+      alert("Please enter exactly 3 digits for the Student ID!");
+      return;
     }
     this.newRecord.studentId = '2024300' + this.newRecord.studentIdSuffix;
 
@@ -245,6 +250,7 @@ export class Records implements OnInit, OnDestroy {
     if (!this.newRecord.amount) { alert("Amount is required!"); return; }
     if (!this.newRecord.method) { alert("Payment Method is required!"); return; }
     if (!this.newRecord.date) { alert("Date is required!"); return; }
+    if (!this.newRecord.selectedFile) { alert("Please attach the receipt payment"); return; }
 
     // Duplicate Validation Checks
     const isDuplicateId = this.records.some(r => r.studentId === this.newRecord.studentId);
@@ -253,7 +259,7 @@ export class Records implements OnInit, OnDestroy {
       return;
     }
 
-    const isDuplicateName = this.records.some(r => 
+    const isDuplicateName = this.records.some(r =>
       r.firstName?.trim().toLowerCase() === this.newRecord.firstName.trim().toLowerCase() &&
       r.lastName?.trim().toLowerCase() === this.newRecord.lastName.trim().toLowerCase() &&
       (r.middleName || '').trim().toLowerCase() === (this.newRecord.middleName || '').trim().toLowerCase()
@@ -373,19 +379,26 @@ export class Records implements OnInit, OnDestroy {
       return;
     }
 
-    this.http.delete<any>(`${this.apiUrl}/students/${student.id}`).subscribe({
+    alert("Please wait for admin approval.");
+
+    this.http.post<any>(`${this.apiUrl}/approvals`, {
+      requestedBy: 'Treasurer',
+      studentId: student.studentId,
+      studentName: `${student.firstName} ${student.lastName}`,
+      requestedData: {
+        type: 'student_delete',
+        data: {
+          id: student.id
+        }
+      },
+      originalData: student
+    }).subscribe({
       next: () => {
-        alert("Student deleted successfully!");
         this.filteredRecords = [];
         this.searchId = '';
-        this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
-          next: (data) => {
-            this.records = this.sortRecords([...data]);
-            this.cdr.detectChanges();
-          }
-        });
+        this.cdr.detectChanges();
       },
-      error: (err) => alert(err.error?.error || "Failed to delete student!")
+      error: (err) => alert(err.error?.error || "Failed to submit approval request!")
     });
   }
 
@@ -432,18 +445,27 @@ export class Records implements OnInit, OnDestroy {
     const transaction = student.transactions[index];
     if (!transaction?.id) { alert("Transaction ID not found!"); return; }
 
-    this.http.delete<any>(`${this.apiUrl}/transactions/${transaction.id}`).subscribe({
-      next: () => {
-        alert("Transaction deleted successfully!");
-        this.http.get<any[]>(`${this.apiUrl}/students`).subscribe({
-          next: (data) => {
-            this.records = this.sortRecords([...data]);
-            this.searchStudent();
-            this.cdr.detectChanges();
-          }
-        });
+    alert("Please wait for admin approval.");
+
+    this.http.post<any>(`${this.apiUrl}/approvals`, {
+      requestedBy: 'Treasurer',
+      studentId: student.studentId,
+      studentName: `${student.firstName} ${student.lastName}`,
+      requestedData: {
+        type: 'transaction_delete',
+        data: {
+          id: transaction.id,
+          fee: transaction.fee,
+          amount: transaction.amount,
+          date: transaction.date
+        }
       },
-      error: (err) => alert(err.error?.error || "Failed to delete transaction!")
+      originalData: transaction
+    }).subscribe({
+      next: () => {
+        this.cdr.detectChanges();
+      },
+      error: (err) => alert(err.error?.error || "Failed to submit approval request!")
     });
   }
 }

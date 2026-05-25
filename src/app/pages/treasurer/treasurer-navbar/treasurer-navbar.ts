@@ -16,10 +16,11 @@ export class Navbar implements OnInit {
   notifications: any[] = [];
   unreadCount = 0;
   showDropdown = false;
+  showAllNotifs = false;
   private apiUrl = 'http://localhost:3000/api';
   private refreshInterval: any;
 
-  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.loadProfileImage();
@@ -54,18 +55,27 @@ export class Navbar implements OnInit {
     const date = new Date(dateStr);
     const now = new Date();
     const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
-    
+
     if (diffInSeconds < 60) return 'Just now';
     if (diffInSeconds < 3600) return `${Math.floor(diffInSeconds / 60)} minutes ago`;
-    if (diffInSeconds < 86400) return `Today, ${date.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}`;
-    if (diffInSeconds < 172800) return `Yesterday, ${date.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'})}`;
-    
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + date.toLocaleTimeString('en-US', {hour: '2-digit', minute:'2-digit'});
+    if (diffInSeconds < 86400) return `Today, ${date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+    if (diffInSeconds < 172800) return `Yesterday, ${date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' })}`;
+
+    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
   }
 
   toggleDropdown(event: Event) {
     event.stopPropagation();
     this.showDropdown = !this.showDropdown;
+    if (!this.showDropdown) {
+      this.showAllNotifs = false;
+    }
+    this.cdr.detectChanges();
+  }
+
+  showPreviousNotifications(event: Event) {
+    event.stopPropagation();
+    this.showAllNotifs = true;
     this.cdr.detectChanges();
   }
 
@@ -73,6 +83,7 @@ export class Navbar implements OnInit {
   closeDropdown(event: Event) {
     if (this.showDropdown) {
       this.showDropdown = false;
+      this.showAllNotifs = false;
       this.cdr.detectChanges();
     }
   }
@@ -92,7 +103,7 @@ export class Navbar implements OnInit {
     this.profileImage = localStorage.getItem('profileImage');
   }
 
-  // 👇 this makes it auto-update if changed in another page/tab
+  // auto-update if changed in another page/tab
   @HostListener('window:storage')
   onStorageChange() {
     this.loadProfileImage();
